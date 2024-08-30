@@ -6,8 +6,11 @@ export const myTheme: DefaultTheme = {
     bold: 700,
   },
   fontSize: {
-    sm: "12px",
-    md: "14px",
-    lg: "16px",
+    xs: "12px",
+    sm: "14px",
+    md: "16px",
+    lg: "18px",
+    xl: "20px",
+    xxl: "24px",
   },
 };
