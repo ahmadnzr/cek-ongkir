@@ -1,4 +1,4 @@
-export type FontSize = "sm" | "md" | "lg";
+export type FontSize = "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
 export type FontWeight = "regular" | "bold";
 
 type FontSizeValue = string;
