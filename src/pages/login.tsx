@@ -89,6 +89,7 @@ const LoginStyled = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   width: 80%;
+  max-width: 350px;
   border-radius: 10px;
   padding: 20px 10px;
   box-shadow: 1px 1px 50px -10px rgba(0, 0, 0, 0.1);
