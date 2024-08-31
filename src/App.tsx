@@ -1,12 +1,29 @@
+import { useState } from "react";
 import styled from "styled-components";
+import { Button, InputNumber, Select } from "antd";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 
 import { Text } from "./components";
-import { Button, InputNumber, Select } from "antd";
 import { Colors, formatRupiah } from "./helpers/utils";
 import { useFecthCost, useFetchCity, useFetchProvince } from "./helpers/hooks";
-import { useState } from "react";
-import { Courier } from "./helpers/types/responseApi";
+import { Courier, CourierType } from "./helpers/types/responseApi";
+
+import Tiki from "./assets/logo/tiki.png";
+import Jne from "./assets/logo/jne.png";
+import Pos from "./assets/logo/pos.png";
+
+type CourierTypeButton = {
+  label: string;
+  value: CourierType;
+  color: string;
+  bg: string;
+};
+
+const courierLogo: Record<CourierType, string> = {
+  jne: Jne,
+  pos: Pos,
+  tiki: Tiki,
+};
 
 type Inputs = {
   fromProvince: string;
@@ -14,11 +31,17 @@ type Inputs = {
   toProvince: string;
   toCity: string;
   weight: string;
-  courier: "jne" | "pos" | "tiki";
+  courier: CourierType;
 };
 
 function App() {
-  const { handleSubmit, watch, control } = useForm<Inputs>();
+  const {
+    handleSubmit,
+    watch,
+    control,
+    reset,
+    formState: { isValid },
+  } = useForm<Inputs>();
 
   const fromProvince = watch("fromProvince");
   const toProvince = watch("toProvince");
@@ -45,6 +68,27 @@ function App() {
       },
     );
   };
+
+  const courierType: CourierTypeButton[] = [
+    {
+      label: "JNE",
+      value: "jne",
+      color: Colors.indicator.green.fg,
+      bg: Colors.indicator.green.bg,
+    },
+    {
+      label: "POS",
+      value: "pos",
+      color: Colors.indicator.purple.fg,
+      bg: Colors.indicator.purple.bg,
+    },
+    {
+      label: "Tiki",
+      value: "tiki",
+      color: Colors.indicator.orange.fg,
+      bg: Colors.indicator.orange.bg,
+    },
+  ];
 
   return (
     <MainStyled>
@@ -173,7 +217,7 @@ function App() {
                     rules={{ required: true }}
                     render={({ field: { onChange, value } }) => (
                       <InputNumber
-                        suffix="Kg"
+                        addonAfter="Kg"
                         style={{ width: "100px" }}
                         value={value}
                         min={1}
@@ -195,107 +239,85 @@ function App() {
                 rules={{ required: true }}
                 render={({ field: { onChange, value } }) => (
                   <Item>
-                    <CourierCard
-                      $isActive={value === "jne"}
-                      $color={Colors.indicator.green.fg}
-                      $bg={Colors.indicator.green.bg}
-                      onClick={() => onChange("jne")}
-                    >
-                      JNE
-                    </CourierCard>
-                    <CourierCard
-                      $isActive={value === "pos"}
-                      $color={Colors.indicator.purple.fg}
-                      $bg={Colors.indicator.purple.bg}
-                      onClick={() => onChange("pos")}
-                    >
-                      POS
-                    </CourierCard>
-                    <CourierCard
-                      $isActive={value === "tiki"}
-                      $color={Colors.indicator.orange.fg}
-                      $bg={Colors.indicator.orange.bg}
-                      onClick={() => onChange("tiki")}
-                    >
-                      TIKI
-                    </CourierCard>
+                    {courierType.map((item) => (
+                      <CourierCard
+                        $isActive={value === item.value}
+                        $color={item.color}
+                        $bg={item.bg}
+                        onClick={() => onChange(item.value)}
+                      >
+                        {item.label}
+                      </CourierCard>
+                    ))}
                   </Item>
                 )}
               />
             </FilterItem>
             <FilterItem>
-              <Button loading={isLoading} type="primary" htmlType="submit">
+              <Button
+                loading={isLoading}
+                type="primary"
+                htmlType="submit"
+                disabled={!isValid}
+              >
                 Cek Ongkir
+              </Button>
+              <Button
+                type="default"
+                htmlType="reset"
+                onClick={() => {
+                  reset();
+                  setResult([]);
+                }}
+              >
+                Reset
               </Button>
             </FilterItem>
           </FilterContainer>
         </form>
 
-        {result.length ? (
+        {result.map((item) => (
           <ResultContainer>
-            {/*
-          <DetailFilter>
-            <DetailCheck>
-              <Text color={Colors.primary.grayLight} size="sm">
-                Dari :
-              </Text>
-              <Text>Jakarta Barat, DKI Jakarta</Text>
-            </DetailCheck>
-            <DetailCheck>
-              <Text color={Colors.primary.grayLight} size="sm">
-                Tujuan :
-              </Text>
-              <Text>Sleman, DIY</Text>
-            </DetailCheck>
-            <DetailCheck>
-              <Text color={Colors.primary.grayLight} size="sm">
-                Berat Barang :
-              </Text>
-              <Text>2 Kg</Text>
-            </DetailCheck>
-          </DetailFilter>
-            */}
+            <DetailCourier>
+              <DetailHeader>
+                {item.code ? (
+                  <CourierLogo $bg={courierLogo[item.code]}></CourierLogo>
+                ) : null}
+                <CourierName>
+                  <Text type="tag" size="sm">
+                    {item.code}
+                  </Text>
+                  <Text weight="bold">{item.name}</Text>
+                </CourierName>
+              </DetailHeader>
 
-            {result.map((item) => (
-              <DetailCourier>
-                <DetailHeader>
-                  <CourierLogo></CourierLogo>
-                  <CourierName>
-                    <Text type="tag" size="sm">
-                      {item.code}
-                    </Text>
-                    <Text weight="bold">{item.name}</Text>
-                  </CourierName>
-                </DetailHeader>
-
-                <CourierService>
-                  {item.costs.map((cost, i) => (
-                    <ServiceItem>
-                      <ServiceDetail>
-                        <Text style={{ display: "flex", gap: "5px" }}>
+              <CourierService>
+                {item.costs.map((cost) => (
+                  <ServiceItem>
+                    <ServiceDetail>
+                      <Text style={{ display: "flex", gap: "5px" }}>
+                        {cost.description}
+                        <Text type="tag" size="xs">
                           {cost.service}
-                          <Text type="tag" size="xs">
-                            {cost.description}
-                          </Text>
                         </Text>
-                        <Text size="xs">
-                          {cost.cost ? `${cost?.cost[i]?.etd} Hari` : "-"}{" "}
-                        </Text>
-                      </ServiceDetail>
-                      <ServiceDetail $align="end">
-                        <Text size="xl" weight="bold">
-                          {cost.cost
-                            ? formatRupiah(cost.cost[i].value || 0)
-                            : "-"}
-                        </Text>
-                      </ServiceDetail>
-                    </ServiceItem>
-                  ))}
-                </CourierService>
-              </DetailCourier>
-            ))}
+                      </Text>
+                      <Text size="xs">
+                        {cost.cost ? `${cost?.cost[0]?.etd || 0} Hari` : "-"}
+                      </Text>
+                    </ServiceDetail>
+                    <ServiceDetail $align="end">
+                      <Text size="xl" weight="bold">
+                        {cost.cost?.length
+                          ? formatRupiah(cost.cost[0]?.value || 0)
+                          : "-"}
+                      </Text>
+                    </ServiceDetail>
+                  </ServiceItem>
+                ))}
+              </CourierService>
+            </DetailCourier>
           </ResultContainer>
-        ) : null}
+        ))}
       </Content>
     </MainStyled>
   );
@@ -305,6 +327,10 @@ const MainStyled = styled.div`
   width: 100%;
   margin: 0 auto;
   margin-bottom: 40px;
+
+  @media (min-width: 425px) {
+    width: 425px;
+  }
 `;
 
 const HeaderStyled = styled.header`
@@ -373,6 +399,7 @@ const CourierCard = styled.div<{
   $bg: string;
   $isActive: boolean;
 }>`
+  cursor: pointer;
   flex: 1;
   border: none;
   background: ${(props) => props.$bg};
@@ -382,7 +409,8 @@ const CourierCard = styled.div<{
   border-radius: 10px;
   text-transform: uppercase;
   transition: 0.3s ease;
-  outline: 2px solid ${(props) => (props.$isActive ? props.$color : props.$bg)};
+  outline: 4px solid ${(props) => (props.$isActive ? props.$color : props.$bg)};
+  text-align: center;
 `;
 
 const ResultContainer = styled.div`
@@ -392,28 +420,7 @@ const ResultContainer = styled.div`
   box-shadow: 1px 1px 50px -10px rgba(0, 0, 0, 0.1);
 `;
 
-{
-  /*
-
-const DetailFilter = styled.div`
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-`;
-
-const DetailCheck = styled.div`
-  max-width: 50%;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-`;
-
-*/
-}
-
-const DetailCourier = styled.div`
-  margin-top: 20px;
-`;
+const DetailCourier = styled.div``;
 
 const DetailHeader = styled.div`
   display: flex;
@@ -421,11 +428,17 @@ const DetailHeader = styled.div`
   gap: 10px;
 `;
 
-const CourierLogo = styled.div`
+const CourierLogo = styled.div<{ $bg: string }>`
   width: 60px;
   height: 60px;
   border-radius: 5px;
-  background: gray;
+  background: white;
+  box-shadow: 1px 1px 50px -10px rgba(0, 0, 0, 0.1);
+  content: "";
+  background-image: url(${(props) => props.$bg});
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 `;
 
 const CourierName = styled.div`
