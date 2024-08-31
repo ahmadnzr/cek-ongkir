@@ -8,7 +8,8 @@ import {
 } from "../types/responseApi";
 
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_BASE_URL,
+  baseURL:
+    import.meta.env.VITE_BASE_URL || "https://rajaongkir-gate.vercel.app",
 });
 
 export const getProvince = async () => {
