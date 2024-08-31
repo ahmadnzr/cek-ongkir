@@ -16,14 +16,14 @@ export const useFetchProvince = () => {
   });
 };
 
-export const useFetchCity = ({ provinceId }: { provinceId: string }) => {
+export const useFetchCity = ({ provinceId }: { provinceId?: string }) => {
   return useQuery({
     refetchOnWindowFocus: false,
     queryKey: ["city", provinceId],
     retry: false,
     queryFn: () => getCities(provinceId),
     select: (data) => {
-      const newData = data.rajaongkir.results;
+      const newData = data?.rajaongkir.results;
       return newData;
     },
   });

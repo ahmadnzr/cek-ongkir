@@ -17,7 +17,8 @@ export const getProvince = async () => {
   return res.data;
 };
 
-export const getCities = async (provinceId: string) => {
+export const getCities = async (provinceId?: string) => {
+  if (!provinceId) return;
   const res = await axiosInstance.get<APIRes<City[]>>(
     `/city?province=${provinceId}`,
   );
