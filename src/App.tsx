@@ -1,19 +1,12 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import { ProtectedRoute } from "./helpers/lib/ProtectedRoute";
-import { Login } from "./pages/login";
 import HomePage from "./pages";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <ProtectedRoute>
-        <HomePage />
-      </ProtectedRoute>
-    ),
+    element: <HomePage />,
   },
-  { path: "/login", element: <Login /> },
 ]);
 
 function App() {
