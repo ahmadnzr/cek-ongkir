@@ -2,7 +2,6 @@ import { useState } from "react";
 import styled from "styled-components";
 import { Button, InputNumber, Select } from "antd";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 
 import { Text } from "../components";
 import { Colors, formatRupiah } from "../helpers/utils";
@@ -57,8 +56,6 @@ const courierType: CourierTypeButton[] = [
 ];
 
 function HomePage() {
-  const navigate = useNavigate();
-
   const {
     handleSubmit,
     watch,
@@ -93,20 +90,12 @@ function HomePage() {
     );
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("isAuth");
-    navigate("/login");
-  };
-
   return (
     <MainStyled>
       <HeaderStyled>
         <Text size="xxl" weight="bold" className="navbar_title">
           CheckOngkir
         </Text>
-        <Button type="primary" onClick={handleLogout}>
-          Logout
-        </Button>
       </HeaderStyled>
 
       <Content>
