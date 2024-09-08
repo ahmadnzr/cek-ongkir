@@ -79,7 +79,7 @@ function HomePage() {
       {
         origin: data.fromCity,
         destination: data.toCity,
-        weight: data.weight.toString(),
+        weight: (parseInt(data.weight) * 1000).toString(), // in gram
         courier: data.courier,
       },
       {
@@ -96,6 +96,16 @@ function HomePage() {
         <Text size="xxl" weight="bold" className="navbar_title">
           CheckOngkir
         </Text>
+        <GithubLink
+          href="https://github.com/ahmadnzr/cek-ongkir"
+          target="_blank"
+        >
+          <img
+            src="/github-mark.png"
+            alt="github-icon"
+            className="github-icon"
+          />
+        </GithubLink>
       </HeaderStyled>
 
       <Content>
@@ -318,6 +328,18 @@ function HomePage() {
           </ResultContainer>
         ))}
       </Content>
+      <Footer>
+        <Text size="sm" color={Colors.primary.grayLight}>
+          2024 |{" "}
+          <a
+            href="https://github.com/ahmadnzr"
+            target="_blank"
+            className="footer_link"
+          >
+            Ahmad Nizar
+          </a>
+        </Text>
+      </Footer>
     </MainStyled>
   );
 }
@@ -325,7 +347,6 @@ function HomePage() {
 const MainStyled = styled.div`
   width: 100%;
   margin: 0 auto;
-  margin-bottom: 40px;
 
   @media (min-width: 425px) {
     width: 425px;
@@ -351,7 +372,7 @@ const HeaderStyled = styled.header`
 `;
 
 const Content = styled.main`
-  margin-top: 70px;
+  margin: 70px 0 40px;
   padding: 12px;
 `;
 
@@ -463,6 +484,29 @@ const ServiceDetail = styled.div<{ $align?: "start" | "end" }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+const Footer = styled.footer`
+  padding: 20px 10px;
+  text-align: center;
+
+  & .footer_link {
+    text-decoration: underline;
+  }
+`;
+
+const GithubLink = styled.a`
+  padding: 8px;
+  background-color: rgba(0, 0, 0, 0.09);
+  border-radius: 50%;
+  transition: 0.3s ease;
+
+  &:hover {
+  }
+
+  & .github-icon {
+    width: 24px;
+  }
 `;
 
 export default HomePage;
