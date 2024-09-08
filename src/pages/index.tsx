@@ -318,6 +318,11 @@ function HomePage() {
           </ResultContainer>
         ))}
       </Content>
+      <Footer>
+        <Text size="sm" color={Colors.primary.grayLight}>
+          2024 | Ahmad Nizar
+        </Text>
+      </Footer>
     </MainStyled>
   );
 }
@@ -325,7 +330,6 @@ function HomePage() {
 const MainStyled = styled.div`
   width: 100%;
   margin: 0 auto;
-  margin-bottom: 40px;
 
   @media (min-width: 425px) {
     width: 425px;
@@ -351,7 +355,7 @@ const HeaderStyled = styled.header`
 `;
 
 const Content = styled.main`
-  margin-top: 70px;
+  margin-top: 70px 0 40px;
   padding: 12px;
 `;
 
@@ -463,6 +467,11 @@ const ServiceDetail = styled.div<{ $align?: "start" | "end" }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+const Footer = styled.footer`
+  padding: 10px;
+  text-align: center;
 `;
 
 export default HomePage;
