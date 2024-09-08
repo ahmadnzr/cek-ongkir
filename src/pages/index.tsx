@@ -79,7 +79,7 @@ function HomePage() {
       {
         origin: data.fromCity,
         destination: data.toCity,
-        weight: data.weight.toString(),
+        weight: (parseInt(data.weight) * 1000).toString(), // in gram
         courier: data.courier,
       },
       {
