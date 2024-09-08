@@ -1,38 +1,14 @@
 # Cek Ongkir
 
-Aplikasi untuk mengecek ongkos kirim (ongkir) dengan menggunakan API dari RajaOngkir.
+**Cek Ongkir** is a web-based application for checking shipping costs (ongkir) from various courier services in Indonesia using the [RajaOngkir](https://rajaongkir.com/) API Starter. This application is built with modern technologies to provide a fast and responsive user experience.
 
-## Fitur
+## Key Features
+- Check shipping costs from various couriers like JNE, POS Indonesia, and TIKI.
+- Responsive and interactive user interface.
+- Data caching for optimized performance.
 
-- Cek ongkos kirim dari berbagai ekspedisi di Indonesia.
-- Antarmuka pengguna yang sederhana dan mudah digunakan.
-- Memanfaatkan API dari RajaOngkir.
-
-## Prasyarat
-
-Pastikan Anda telah menginstal perangkat lunak berikut:
-
-- [Node.js](https://nodejs.org/) versi 18 atau lebih baru.
-- [Git](https://git-scm.com/) untuk mengkloning repositori.
-
-## Instalasi dan Jalankan
-
-1. **Clone repository**:
-
-   Clone repositori ini ke mesin lokal Anda menggunakan SSH:
-
-   ```bash
-   git clone git@github.com:ahmadnzr/cek-ongkir.git
-   ```
-
- 2. **Install**:
-
-     ```bash
-     npm run install
-     ```
-
- 3. **.env**:
-
-     ```bash
-     VITE_BASE_URL=https://rajaongkir-gate.vercel.app
-     ```
+## Technologies Used
+- **React**: A JavaScript library for building user interfaces.
+- **Styled-components**: For managing component styling using the CSS-in-JS approach.
+- **React Query**: For efficient data fetching, caching, and updating.
+- **Axios**: For handling API communication with RajaOngkir.
