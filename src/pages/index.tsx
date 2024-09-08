@@ -96,6 +96,16 @@ function HomePage() {
         <Text size="xxl" weight="bold" className="navbar_title">
           CheckOngkir
         </Text>
+        <GithubLink
+          href="https://github.com/ahmadnzr/cek-ongkir"
+          target="_blank"
+        >
+          <img
+            src="/github-mark.png"
+            alt="github-icon"
+            className="github-icon"
+          />
+        </GithubLink>
       </HeaderStyled>
 
       <Content>
@@ -320,7 +330,14 @@ function HomePage() {
       </Content>
       <Footer>
         <Text size="sm" color={Colors.primary.grayLight}>
-          2024 | Ahmad Nizar
+          2024 |{" "}
+          <a
+            href="https://github.com/ahmadnzr"
+            target="_blank"
+            className="footer_link"
+          >
+            Ahmad Nizar
+          </a>
         </Text>
       </Footer>
     </MainStyled>
@@ -355,7 +372,7 @@ const HeaderStyled = styled.header`
 `;
 
 const Content = styled.main`
-  margin-top: 70px 0 40px;
+  margin: 70px 0 40px;
   padding: 12px;
 `;
 
@@ -470,8 +487,26 @@ const ServiceDetail = styled.div<{ $align?: "start" | "end" }>`
 `;
 
 const Footer = styled.footer`
-  padding: 10px;
+  padding: 20px 10px;
   text-align: center;
+
+  & .footer_link {
+    text-decoration: underline;
+  }
+`;
+
+const GithubLink = styled.a`
+  padding: 8px;
+  background-color: rgba(0, 0, 0, 0.09);
+  border-radius: 50%;
+  transition: 0.3s ease;
+
+  &:hover {
+  }
+
+  & .github-icon {
+    width: 24px;
+  }
 `;
 
 export default HomePage;
