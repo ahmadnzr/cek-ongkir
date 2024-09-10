@@ -1,8 +1,13 @@
 import { useState } from "react";
-import { Button, InputNumber } from "antd";
+import { Button } from "antd";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 
-import { Header, InputSelect, Text } from "../../components";
+import {
+  ControlledInputNumber,
+  Header,
+  InputSelect,
+  Text,
+} from "../../components";
 import { Colors, formatRupiah } from "../../helpers/utils";
 import {
   useFecthCost,
@@ -146,21 +151,7 @@ function HomePage() {
               </Text>
               <Item>
                 <SelectFilter>
-                  <Controller
-                    control={control}
-                    name="weight"
-                    rules={{ required: true }}
-                    render={({ field: { onChange, value } }) => (
-                      <InputNumber
-                        addonAfter="Kg"
-                        style={{ width: "100px" }}
-                        value={value}
-                        min={1}
-                        max={100}
-                        onChange={onChange}
-                      />
-                    )}
-                  />
+                  <ControlledInputNumber control={control} name="weight" />
                 </SelectFilter>
               </Item>
             </FilterItem>
