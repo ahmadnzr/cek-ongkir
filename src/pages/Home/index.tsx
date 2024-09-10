@@ -167,6 +167,7 @@ function HomePage() {
                   <Item>
                     {courierType.map((item) => (
                       <CourierCard
+                        key={item.value}
                         $isActive={value === item.value}
                         $color={item.color}
                         $bg={item.bg}
@@ -203,7 +204,7 @@ function HomePage() {
         </form>
 
         {result.map((item) => (
-          <ResultContainer>
+          <ResultContainer key={item.code}>
             <DetailCourier>
               <DetailHeader>
                 {item.code ? (
@@ -219,7 +220,7 @@ function HomePage() {
 
               <CourierService>
                 {item.costs.map((cost) => (
-                  <ServiceItem>
+                  <ServiceItem key={cost.service}>
                     <ServiceDetail>
                       <Text style={{ display: "flex", gap: "5px" }}>
                         {cost.description}
