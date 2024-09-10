@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Button, InputNumber, Select } from "antd";
+import { Button, InputNumber } from "antd";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 
-import { Header, Text } from "../../components";
+import { Header, InputSelect, Text } from "../../components";
 import { Colors, formatRupiah } from "../../helpers/utils";
 import {
   useFecthCost,
@@ -89,42 +89,24 @@ function HomePage() {
               <Item>
                 <SelectFilter>
                   <Text size="sm">Provinsi :</Text>
-                  <Controller
+                  <InputSelect
                     control={control}
                     name="fromProvince"
-                    rules={{ required: true }}
-                    render={({ field: { onChange, value } }) => (
-                      <Select
-                        allowClear
-                        value={value}
-                        options={province?.map((item) => ({
-                          label: item.province,
-                          value: item.province_id,
-                        }))}
-                        placeholder="Pilih"
-                        onChange={onChange}
-                      />
-                    )}
+                    options={province?.map((item) => ({
+                      label: item.province,
+                      value: item.province_id,
+                    }))}
                   />
                 </SelectFilter>
                 <SelectFilter>
                   <Text size="sm">Kota/Kabupaten :</Text>
-                  <Controller
+                  <InputSelect
                     control={control}
                     name="fromCity"
-                    rules={{ required: true }}
-                    render={({ field: { onChange, value } }) => (
-                      <Select
-                        allowClear
-                        value={value}
-                        options={cities?.map((item) => ({
-                          label: item.city_name,
-                          value: item.city_id,
-                        }))}
-                        placeholder="Pilih"
-                        onChange={onChange}
-                      />
-                    )}
+                    options={cities?.map((item) => ({
+                      label: item.city_name,
+                      value: item.city_id,
+                    }))}
                   />
                 </SelectFilter>
               </Item>
@@ -136,42 +118,24 @@ function HomePage() {
               <Item>
                 <SelectFilter>
                   <Text size="sm">Provinsi :</Text>
-                  <Controller
+                  <InputSelect
                     control={control}
                     name="toProvince"
-                    rules={{ required: true }}
-                    render={({ field: { onChange, value } }) => (
-                      <Select
-                        allowClear
-                        value={value}
-                        options={province?.map((item) => ({
-                          label: item.province,
-                          value: item.province_id,
-                        }))}
-                        placeholder="Pilih"
-                        onChange={onChange}
-                      />
-                    )}
+                    options={province?.map((item) => ({
+                      label: item.province,
+                      value: item.province_id,
+                    }))}
                   />
                 </SelectFilter>
                 <SelectFilter>
                   <Text size="sm">Kota/Kabupaten :</Text>
-                  <Controller
+                  <InputSelect
                     control={control}
                     name="toCity"
-                    rules={{ required: true }}
-                    render={({ field: { onChange, value } }) => (
-                      <Select
-                        allowClear
-                        value={value}
-                        options={toCities?.map((item) => ({
-                          label: item.city_name,
-                          value: item.city_id,
-                        }))}
-                        placeholder="Pilih"
-                        onChange={onChange}
-                      />
-                    )}
+                    options={toCities?.map((item) => ({
+                      label: item.city_name,
+                      value: item.city_id,
+                    }))}
                   />
                 </SelectFilter>
               </Item>
