@@ -26,6 +26,7 @@ export const useFetchCity = ({ provinceId }: { provinceId?: string }) => {
       const newData = data?.rajaongkir.results;
       return newData;
     },
+    enabled: Boolean(provinceId),
   });
 };
 
