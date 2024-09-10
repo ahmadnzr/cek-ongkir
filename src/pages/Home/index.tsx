@@ -222,12 +222,20 @@ function HomePage() {
                 {item.costs.map((cost) => (
                   <ServiceItem key={cost.service}>
                     <ServiceDetail>
-                      <Text style={{ display: "flex", gap: "5px" }}>
-                        {cost.description}
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "5px",
+                        }}
+                      >
+                        <Text style={{ display: "flex", gap: "5px" }}>
+                          {cost.description}
+                        </Text>
                         <Text type="tag" size="xs">
                           {cost.service}
                         </Text>
-                      </Text>
+                      </div>
                       <Text size="xs">
                         {cost.cost ? `${cost?.cost[0]?.etd || 0} Hari` : "-"}
                       </Text>
