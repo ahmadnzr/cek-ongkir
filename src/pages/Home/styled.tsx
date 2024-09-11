@@ -16,17 +16,6 @@ export const Content = styled.main`
   padding: 12px;
 `;
 
-export const Hero = styled.section`
-  padding: 20px 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-
-  & .hero_desc {
-    line-height: 1.5;
-  }
-`;
-
 export const FilterContainer = styled.div`
   padding: 10px 12px;
   border-radius: 10px;

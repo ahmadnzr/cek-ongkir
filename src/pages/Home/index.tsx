@@ -5,6 +5,7 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import {
   ControlledInputNumber,
   Header,
+  Hero,
   InputSelect,
   Text,
 } from "../../components";
@@ -28,7 +29,6 @@ import {
   FilterContainer,
   FilterItem,
   Footer,
-  Hero,
   Item,
   MainStyled,
   ResultContainer,
@@ -76,15 +76,7 @@ function HomePage() {
     <MainStyled>
       <Header />
       <Content>
-        <Hero>
-          <Text weight="bold" size="xl">
-            Check Ongkir / Cek Tarif
-          </Text>
-          <Text className="hero_desc">
-            Cek ongkos kirim gratis untuk ekpedisi semua daerah di Indonesia
-            menggunakan jasa kurir JNE, POS, dan Tiki
-          </Text>
-        </Hero>
+        <Hero />
         <form onSubmit={handleSubmit(onSubmit)}>
           <FilterContainer>
             <FilterItem>
