@@ -1,25 +1,9 @@
-import { CourierType } from "../../helpers/types/responseApi";
-import { Colors } from "../../helpers/utils";
+import { CourierType, CourierTypeButton } from "../types";
+import { Colors } from "./color";
 
 import Tiki from "../../assets/logo/tiki.png";
 import Jne from "../../assets/logo/jne.png";
 import Pos from "../../assets/logo/pos.png";
-
-export type Inputs = {
-  fromProvince: string;
-  fromCity: string;
-  toProvince: string;
-  toCity: string;
-  weight: string;
-  courier: CourierType;
-};
-
-export type CourierTypeButton = {
-  label: string;
-  value: CourierType;
-  color: string;
-  bg: string;
-};
 
 export const courierType: CourierTypeButton[] = [
   {

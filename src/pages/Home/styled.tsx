@@ -16,52 +16,6 @@ export const Content = styled.main`
   padding: 12px;
 `;
 
-export const FilterContainer = styled.div`
-  padding: 10px 12px;
-  border-radius: 10px;
-  box-shadow: 1px 1px 50px -10px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-`;
-
-export const FilterItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-`;
-
-export const Item = styled.div`
-  display: flex;
-  gap: 10px;
-`;
-
-export const SelectFilter = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-`;
-
-export const CourierCard = styled.div<{
-  $color: string;
-  $bg: string;
-  $isActive: boolean;
-}>`
-  cursor: pointer;
-  flex: 1;
-  border: none;
-  background: ${(props) => props.$bg};
-  color: ${(props) => props.$color};
-  font-weight: 700;
-  padding: 10px;
-  border-radius: 10px;
-  text-transform: uppercase;
-  transition: 0.3s ease;
-  outline: 4px solid ${(props) => (props.$isActive ? props.$color : props.$bg)};
-  text-align: center;
-`;
-
 export const ResultContainer = styled.div`
   margin-top: 40px;
   border-radius: 10px;
