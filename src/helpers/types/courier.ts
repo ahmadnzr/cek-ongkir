@@ -46,3 +46,19 @@ export interface CostRequest {
   weight: string;
   courier: CourierType;
 }
+
+export type CourierTypeButton = {
+  label: string;
+  value: CourierType;
+  color: string;
+  bg: string;
+};
+
+export type FilterInputs = {
+  fromProvince: string;
+  fromCity: string;
+  toProvince: string;
+  toCity: string;
+  weight: string;
+  courier: CourierType;
+};

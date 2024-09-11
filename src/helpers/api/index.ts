@@ -1,11 +1,5 @@
 import axios, { AxiosInstance } from "axios";
-import {
-  APIRes,
-  City,
-  CostRequest,
-  Courier,
-  Province,
-} from "../types/responseApi";
+import { APIRes, City, CostRequest, Courier, Province } from "../types/";
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL:
