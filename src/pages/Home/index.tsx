@@ -13,6 +13,7 @@ import {
   DetailHeader,
   Footer,
   MainStyled,
+  NotFoundContainer,
   ResultContainer,
   ServiceDetail,
   ServiceItem,
@@ -42,38 +43,46 @@ function HomePage() {
                 </CourierName>
               </DetailHeader>
 
-              <CourierService>
-                {item.costs.map((cost) => (
-                  <ServiceItem key={cost.service}>
-                    <ServiceDetail>
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "5px",
-                        }}
-                      >
-                        <Text style={{ display: "flex", gap: "5px" }}>
-                          {cost.description}
+              {item.costs.length ? (
+                <CourierService>
+                  {item.costs.map((cost) => (
+                    <ServiceItem key={cost.service}>
+                      <ServiceDetail>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "5px",
+                          }}
+                        >
+                          <Text style={{ display: "flex", gap: "5px" }}>
+                            {cost.description}
+                          </Text>
+                          <Text type="tag" size="xs">
+                            {cost.service}
+                          </Text>
+                        </div>
+                        <Text size="xs">
+                          {cost.cost ? `${cost?.cost[0]?.etd || 0} Hari` : "-"}
                         </Text>
-                        <Text type="tag" size="xs">
-                          {cost.service}
+                      </ServiceDetail>
+                      <ServiceDetail $align="end">
+                        <Text size="xl" weight="bold">
+                          {cost.cost?.length
+                            ? formatRupiah(cost.cost[0]?.value || 0)
+                            : "-"}
                         </Text>
-                      </div>
-                      <Text size="xs">
-                        {cost.cost ? `${cost?.cost[0]?.etd || 0} Hari` : "-"}
-                      </Text>
-                    </ServiceDetail>
-                    <ServiceDetail $align="end">
-                      <Text size="xl" weight="bold">
-                        {cost.cost?.length
-                          ? formatRupiah(cost.cost[0]?.value || 0)
-                          : "-"}
-                      </Text>
-                    </ServiceDetail>
-                  </ServiceItem>
-                ))}
-              </CourierService>
+                      </ServiceDetail>
+                    </ServiceItem>
+                  ))}
+                </CourierService>
+              ) : (
+                <NotFoundContainer>
+                  <Text size="lg" color={Colors.primary.grayLight}>
+                    Layanan Pengiriman Tidak Tersedia
+                  </Text>
+                </NotFoundContainer>
+              )}
             </DetailCourier>
           </ResultContainer>
         ))}
