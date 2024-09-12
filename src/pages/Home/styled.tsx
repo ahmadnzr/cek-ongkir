@@ -77,3 +77,8 @@ export const Footer = styled.footer`
     text-decoration: underline;
   }
 `;
+
+export const NotFoundContainer = styled.div`
+  margin-top: 10px;
+  text-align: center;
+`;
