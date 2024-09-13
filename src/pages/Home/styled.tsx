@@ -4,7 +4,10 @@ import { Colors } from "../../helpers/utils";
 
 export const MainStyled = styled.div`
   width: 100%;
+  min-height: 100dvh;
   margin: 0 auto;
+  display: grid;
+  grid-template-rows: 1fr auto;
 
   @media (min-width: 425px) {
     width: 425px;
@@ -12,7 +15,7 @@ export const MainStyled = styled.div`
 `;
 
 export const Content = styled.main`
-  margin: 70px 0 40px;
+  margin: 70px 0 0;
   padding: 12px;
 `;
 
