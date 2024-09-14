@@ -12,3 +12,8 @@
 - **Styled-components**: For managing component styling using the CSS-in-JS approach.
 - **React Query**: For efficient data fetching, caching, and updating.
 - **Axios**: For handling API communication with RajaOngkir.
+
+## TODO List Feature
+- [ ] Filter History.
+- [ ] Darkmode.
+- [ ] Better UI for Desktop Device.
