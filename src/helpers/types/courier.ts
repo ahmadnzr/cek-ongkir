@@ -50,8 +50,6 @@ export interface CostRequest {
 export type CourierTypeButton = {
   label: string;
   value: CourierType;
-  color: string;
-  bg: string;
 };
 
 export type FilterInputs = {

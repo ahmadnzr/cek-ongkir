@@ -1,7 +1,12 @@
 import { useContext } from "react";
 
 import { Filter, Header, Hero, Text } from "../../components";
-import { Colors, courierLogo, formatRupiah } from "../../helpers/utils";
+import {
+  Colors,
+  courierLogo,
+  formatRupiah,
+  getCourierColor,
+} from "../../helpers/utils";
 import { FilterResultCtx } from "../../helpers/lib";
 
 import {
@@ -36,7 +41,11 @@ function HomePage() {
                   <CourierLogo $bg={courierLogo[item.code]}></CourierLogo>
                 ) : null}
                 <CourierName>
-                  <Text type="tag" size="sm">
+                  <Text
+                    type="tag"
+                    size="sm"
+                    tagColor={getCourierColor(item.code)}
+                  >
                     {item.code}
                   </Text>
                   <Text weight="bold">{item.name}</Text>
@@ -58,7 +67,11 @@ function HomePage() {
                           <Text style={{ display: "flex", gap: "5px" }}>
                             {cost.description}
                           </Text>
-                          <Text type="tag" size="xs">
+                          <Text
+                            type="tag"
+                            size="xs"
+                            tagColor={getCourierColor(item.code)}
+                          >
                             {cost.service}
                           </Text>
                         </div>

@@ -1,7 +1,7 @@
 import { HTMLAttributes } from "react";
 import styled, { css } from "styled-components";
 
-import { FontSize, FontWeight } from "../../helpers/types";
+import { FontSize, FontWeight, IndicatorColor } from "../../helpers/types";
 import { Colors } from "../../helpers/utils";
 
 interface Props extends HTMLAttributes<HTMLParagraphElement> {
@@ -9,6 +9,7 @@ interface Props extends HTMLAttributes<HTMLParagraphElement> {
   weight?: FontWeight;
   color?: string;
   type?: "normal" | "tag";
+  tagColor?: IndicatorColor;
 }
 
 export const Text = ({
@@ -17,6 +18,7 @@ export const Text = ({
   size = "md",
   weight = "regular",
   color = Colors.primary.grayDark,
+  tagColor = "green",
   ...others
 }: Props) => {
   return (
@@ -25,6 +27,7 @@ export const Text = ({
       $size={size}
       $weight={weight}
       $color={color}
+      $tagColor={tagColor}
       {...others}
     >
       {children}
@@ -37,6 +40,7 @@ const TextStyled = styled.p<{
   $weight: FontWeight;
   $color: string;
   $type: "normal" | "tag";
+  $tagColor: IndicatorColor;
 }>`
   ${(props) => css`
     font-size: ${props.theme.fontSize[props.$size]};
@@ -50,8 +54,8 @@ const TextStyled = styled.p<{
           width: fit-content;
           padding: 3px 6px;
           border-radius: 4px;
-          background: ${Colors.indicator.green.bg};
-          color: ${Colors.indicator.green.fg};
+          background: ${Colors.indicator[props.$tagColor].bg};
+          color: ${Colors.indicator[props.$tagColor].fg};
         `
       : ""}
 `;

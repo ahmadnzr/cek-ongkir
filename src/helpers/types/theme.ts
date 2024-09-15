@@ -1,3 +1,5 @@
+import { Colors } from "../utils";
+
 export type FontSize = "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
 export type FontWeight = "regular" | "bold";
 
@@ -11,3 +13,5 @@ export type FontSizeType = {
 export type FontWeightType = {
   [key in FontWeight]: FontWeightValue;
 };
+
+export type IndicatorColor = keyof typeof Colors.indicator;
