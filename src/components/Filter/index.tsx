@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import { Button } from "antd";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
-import { FilterInputs } from "../../helpers/types";
-import { courierType } from "../../helpers/utils";
+import { FilterInputs, IndicatorColor } from "../../helpers/types";
+import { Colors, courierType, getCourierColor } from "../../helpers/utils";
 import {
   useFecthCost,
   useFetchCity,
@@ -135,8 +135,7 @@ export const Filter = () => {
                   <CourierCard
                     key={item.value}
                     $isActive={value === item.value}
-                    $color={item.color}
-                    $bg={item.bg}
+                    $color={getCourierColor(item.value)}
                     onClick={() => onChange(item.value)}
                   >
                     {item.label}
@@ -199,20 +198,22 @@ const SelectFilter = styled.div`
 `;
 
 const CourierCard = styled.div<{
-  $color: string;
-  $bg: string;
   $isActive: boolean;
+  $color: IndicatorColor;
 }>`
+  ${(props) => css`
+    background: ${Colors.indicator[props.$color].bg};
+    color: ${Colors.indicator[props.$color].fg};
+    outline: 4px solid
+      ${Colors.indicator[props.$color][props.$isActive ? "fg" : "bg"]};
+  `};
   cursor: pointer;
   flex: 1;
   border: none;
-  background: ${(props) => props.$bg};
-  color: ${(props) => props.$color};
   font-weight: 700;
   padding: 10px;
   border-radius: 10px;
   text-transform: uppercase;
   transition: 0.3s ease;
-  outline: 4px solid ${(props) => (props.$isActive ? props.$color : props.$bg)};
   text-align: center;
 `;
