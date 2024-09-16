@@ -1,6 +1,6 @@
 import { useContext } from "react";
 
-import { Filter, Header, Hero, Text } from "../../components";
+import { Filter, Footer, Header, Hero, Text } from "../../components";
 import {
   Colors,
   courierLogo,
@@ -16,7 +16,6 @@ import {
   CourierService,
   DetailCourier,
   DetailHeader,
-  Footer,
   MainStyled,
   NotFoundContainer,
   ResultContainer,
@@ -100,18 +99,7 @@ function HomePage() {
           </ResultContainer>
         ))}
       </Content>
-      <Footer>
-        <Text size="sm" color={Colors.primary.grayLight}>
-          2024 |{" "}
-          <a
-            href="https://github.com/ahmadnzr"
-            target="_blank"
-            className="footer_link"
-          >
-            Ahmad Nizar
-          </a>
-        </Text>
-      </Footer>
+      <Footer />
     </MainStyled>
   );
 }

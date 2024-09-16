@@ -72,15 +72,6 @@ export const ServiceDetail = styled.div<{ $align?: "start" | "end" }>`
   align-items: center;
 `;
 
-export const Footer = styled.footer`
-  padding: 20px 10px;
-  text-align: center;
-
-  & .footer_link {
-    text-decoration: underline;
-  }
-`;
-
 export const NotFoundContainer = styled.div`
   margin-top: 10px;
   text-align: center;
