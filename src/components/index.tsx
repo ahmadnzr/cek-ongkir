@@ -5,3 +5,4 @@ export * from "./ControlledInputNumber";
 export * from "./Hero";
 export * from "./Filter";
 export * from "./Footer";
+export * from "./ServiceCourierItem";
