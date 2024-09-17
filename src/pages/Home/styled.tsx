@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-import { Colors } from "../../helpers/utils";
-
 export const MainStyled = styled.div`
   width: 100%;
   min-height: 100dvh;
@@ -55,21 +53,6 @@ export const CourierName = styled.div`
 
 export const CourierService = styled.div`
   margin-top: 10px;
-`;
-
-export const ServiceItem = styled.div`
-  padding: 14px 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 10px;
-  border-bottom: 2px dashed ${Colors.primary.grayLight};
-`;
-
-export const ServiceDetail = styled.div<{ $align?: "start" | "end" }>`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 `;
 
 export const NotFoundContainer = styled.div`

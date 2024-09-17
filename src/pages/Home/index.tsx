@@ -1,12 +1,14 @@
 import { useContext } from "react";
 
-import { Filter, Footer, Header, Hero, Text } from "../../components";
 import {
-  Colors,
-  courierLogo,
-  formatRupiah,
-  getCourierColor,
-} from "../../helpers/utils";
+  Filter,
+  Footer,
+  Header,
+  Hero,
+  ServiceCourierItem,
+  Text,
+} from "../../components";
+import { Colors, courierLogo, getCourierColor } from "../../helpers/utils";
 import { FilterResultCtx } from "../../helpers/lib";
 
 import {
@@ -19,8 +21,6 @@ import {
   MainStyled,
   NotFoundContainer,
   ResultContainer,
-  ServiceDetail,
-  ServiceItem,
 } from "./styled";
 
 function HomePage() {
@@ -54,38 +54,11 @@ function HomePage() {
               {item.costs.length ? (
                 <CourierService>
                   {item.costs.map((cost) => (
-                    <ServiceItem key={cost.service}>
-                      <ServiceDetail>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "5px",
-                          }}
-                        >
-                          <Text style={{ display: "flex", gap: "5px" }}>
-                            {cost.description}
-                          </Text>
-                          <Text
-                            type="tag"
-                            size="xs"
-                            tagColor={getCourierColor(item.code)}
-                          >
-                            {cost.service}
-                          </Text>
-                        </div>
-                        <Text size="xs">
-                          {cost.cost ? `${cost?.cost[0]?.etd || 0} Hari` : "-"}
-                        </Text>
-                      </ServiceDetail>
-                      <ServiceDetail $align="end">
-                        <Text size="xl" weight="bold">
-                          {cost.cost?.length
-                            ? formatRupiah(cost.cost[0]?.value || 0)
-                            : "-"}
-                        </Text>
-                      </ServiceDetail>
-                    </ServiceItem>
+                    <ServiceCourierItem
+                      key={cost.service}
+                      cost={cost}
+                      code={item.code}
+                    />
                   ))}
                 </CourierService>
               ) : (
