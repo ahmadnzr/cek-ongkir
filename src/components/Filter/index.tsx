@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Button } from "antd";
+import { Button, Tabs } from "antd";
 import styled, { css } from "styled-components";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
@@ -52,128 +52,167 @@ export const Filter = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <FilterContainer>
-        <FilterItem>
-          <Text size="lg" weight="bold">
-            Asal
-          </Text>
-          <Item>
-            <SelectFilter>
-              <Text size="sm">Provinsi :</Text>
-              <InputSelect
-                control={control}
-                name="fromProvince"
-                options={province?.map((item) => ({
-                  label: item.province,
-                  value: item.province_id,
-                }))}
-              />
-            </SelectFilter>
-            <SelectFilter>
-              <Text size="sm">Kota/Kabupaten :</Text>
-              <InputSelect
-                control={control}
-                name="fromCity"
-                options={cities?.map((item) => ({
-                  label: item.city_name,
-                  value: item.city_id,
-                }))}
-              />
-            </SelectFilter>
-          </Item>
-        </FilterItem>
-        <FilterItem>
-          <Text size="lg" weight="bold">
-            Tujuan
-          </Text>
-          <Item>
-            <SelectFilter>
-              <Text size="sm">Provinsi :</Text>
-              <InputSelect
-                control={control}
-                name="toProvince"
-                options={province?.map((item) => ({
-                  label: item.province,
-                  value: item.province_id,
-                }))}
-              />
-            </SelectFilter>
-            <SelectFilter>
-              <Text size="sm">Kota/Kabupaten :</Text>
-              <InputSelect
-                control={control}
-                name="toCity"
-                options={toCities?.map((item) => ({
-                  label: item.city_name,
-                  value: item.city_id,
-                }))}
-              />
-            </SelectFilter>
-          </Item>
-        </FilterItem>
-        <FilterItem>
-          <Text size="lg" weight="bold">
-            Berat
-          </Text>
-          <Item>
-            <SelectFilter>
-              <ControlledInputNumber control={control} name="weight" />
-            </SelectFilter>
-          </Item>
-        </FilterItem>
-        <FilterItem>
-          <Text size="lg" weight="bold">
-            Kurir
-          </Text>
-          <Controller
-            control={control}
-            name="courier"
-            rules={{ required: true }}
-            render={({ field: { onChange, value } }) => (
-              <Item>
-                {courierType.map((item) => (
-                  <CourierCard
-                    key={item.value}
-                    $isActive={value === item.value}
-                    $color={getCourierColor(item.value)}
-                    onClick={() => onChange(item.value)}
-                  >
-                    {item.label}
-                  </CourierCard>
-                ))}
-              </Item>
-            )}
-          />
-        </FilterItem>
-        <FilterItem>
-          <Button
-            loading={isLoading}
-            type="primary"
-            htmlType="submit"
-            disabled={!isValid}
-          >
-            Cek Ongkir
-          </Button>
-          <Button
-            type="default"
-            htmlType="reset"
-            onClick={() => {
-              reset();
-              setResults([]);
-            }}
-          >
-            Reset
-          </Button>
-        </FilterItem>
-      </FilterContainer>
+      <Container>
+        <Tabs
+          items={[
+            {
+              key: "1",
+              label: "Filter",
+              children: (
+                <>
+                  <FilterContainer>
+                    <FilterItem>
+                      <Text size="lg" weight="bold">
+                        Asal
+                      </Text>
+                      <Item>
+                        <SelectFilter>
+                          <Text size="sm">Provinsi :</Text>
+                          <InputSelect
+                            control={control}
+                            name="fromProvince"
+                            options={province?.map((item) => ({
+                              label: item.province,
+                              value: item.province_id,
+                            }))}
+                          />
+                        </SelectFilter>
+                        <SelectFilter>
+                          <Text size="sm">Kota/Kabupaten :</Text>
+                          <InputSelect
+                            control={control}
+                            name="fromCity"
+                            options={cities?.map((item) => ({
+                              label: item.city_name,
+                              value: item.city_id,
+                            }))}
+                          />
+                        </SelectFilter>
+                      </Item>
+                    </FilterItem>
+                    <FilterItem>
+                      <Text size="lg" weight="bold">
+                        Tujuan
+                      </Text>
+                      <Item>
+                        <SelectFilter>
+                          <Text size="sm">Provinsi :</Text>
+                          <InputSelect
+                            control={control}
+                            name="toProvince"
+                            options={province?.map((item) => ({
+                              label: item.province,
+                              value: item.province_id,
+                            }))}
+                          />
+                        </SelectFilter>
+                        <SelectFilter>
+                          <Text size="sm">Kota/Kabupaten :</Text>
+                          <InputSelect
+                            control={control}
+                            name="toCity"
+                            options={toCities?.map((item) => ({
+                              label: item.city_name,
+                              value: item.city_id,
+                            }))}
+                          />
+                        </SelectFilter>
+                      </Item>
+                    </FilterItem>
+                    <FilterItem>
+                      <Text size="lg" weight="bold">
+                        Berat
+                      </Text>
+                      <Item>
+                        <SelectFilter>
+                          <ControlledInputNumber
+                            control={control}
+                            name="weight"
+                          />
+                        </SelectFilter>
+                      </Item>
+                    </FilterItem>
+                    <FilterItem>
+                      <Text size="lg" weight="bold">
+                        Kurir
+                      </Text>
+                      <Controller
+                        control={control}
+                        name="courier"
+                        rules={{ required: true }}
+                        render={({ field: { onChange, value } }) => (
+                          <Item>
+                            {courierType.map((item) => (
+                              <CourierCard
+                                key={item.value}
+                                $isActive={value === item.value}
+                                $color={getCourierColor(item.value)}
+                                onClick={() => onChange(item.value)}
+                              >
+                                {item.label}
+                              </CourierCard>
+                            ))}
+                          </Item>
+                        )}
+                      />
+                    </FilterItem>
+                    <FilterButton>
+                      <Button
+                        className="primary-btn"
+                        loading={isLoading}
+                        type="primary"
+                        htmlType="submit"
+                        disabled={!isValid}
+                        style={{ gridColumn: "1/3" }}
+                      >
+                        Cek Ongkir
+                      </Button>
+                      <Button
+                        type="default"
+                        htmlType="reset"
+                        onClick={() => {
+                          reset();
+                          setResults([]);
+                        }}
+                      >
+                        Reset
+                      </Button>
+                      <Button disabled={!isValid}>Simpan Filter</Button>
+                    </FilterButton>
+                  </FilterContainer>
+                </>
+              ),
+            },
+            {
+              key: "2",
+              label: "Histori",
+              children: (
+                <HistoryContainer>
+                  <NotFound>
+                    <Text size="lg" weight="bold">
+                      Belum Ada Histori
+                    </Text>
+                    <Text style={{ marginTop: "10px", lineHeight: "1.2rem" }}>
+                      Silakan simpan filter untuk membuat histori filter.
+                    </Text>
+                  </NotFound>
+                </HistoryContainer>
+              ),
+            },
+          ]}
+        />
+      </Container>
     </form>
   );
 };
 
-const FilterContainer = styled.div`
-  padding: 10px 12px;
+const Container = styled.div`
+  padding: 0 12px 10px;
   border-radius: 10px;
   box-shadow: 1px 1px 50px -10px rgba(0, 0, 0, 0.1);
+`;
+
+const FilterContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -182,6 +221,12 @@ const FilterContainer = styled.div`
 const FilterItem = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 10px;
+`;
+
+const FilterButton = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 10px;
 `;
 
@@ -215,5 +260,19 @@ const CourierCard = styled.div<{
   border-radius: 10px;
   text-transform: uppercase;
   transition: 0.3s ease;
+  text-align: center;
+`;
+
+const HistoryContainer = styled.div`
+  position: relative;
+  min-height: 100px;
+`;
+
+const NotFound = styled.div`
+  position: absolute;
+  width: 80%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   text-align: center;
 `;
