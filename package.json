@@ -12,6 +12,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@heroicons/react": "^2.1.5",
     "@tanstack/react-query": "^4.36.1",
     "antd": "^5.20.3",
     "axios": "^1.7.5",
