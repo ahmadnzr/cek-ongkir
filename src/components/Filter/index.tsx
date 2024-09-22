@@ -1,7 +1,8 @@
 import { useContext } from "react";
-import { Button, Tabs } from "antd";
+import { Button, Flex, Tabs } from "antd";
 import styled, { css } from "styled-components";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 
 import { FilterInputs, IndicatorColor } from "../../helpers/types";
 import { Colors, courierType, getCourierColor } from "../../helpers/utils";
@@ -33,6 +34,7 @@ export const Filter = () => {
   const { data: cities } = useFetchCity({ provinceId: fromProvince });
   const { data: toCities } = useFetchCity({ provinceId: toProvince });
   const { mutate, isLoading } = useFecthCost();
+  const history = [1];
 
   const onSubmit: SubmitHandler<FilterInputs> = (data) => {
     mutate(
@@ -188,14 +190,54 @@ export const Filter = () => {
               label: "Histori",
               children: (
                 <HistoryContainer>
-                  <NotFound>
-                    <Text size="lg" weight="bold">
-                      Belum Ada Histori
-                    </Text>
-                    <Text style={{ marginTop: "10px", lineHeight: "1.2rem" }}>
-                      Silakan simpan filter untuk membuat histori filter.
-                    </Text>
-                  </NotFound>
+                  {history.length ? (
+                    <>
+                      <HistoryItem>
+                        <DeleteIcon>
+                          <XMarkIcon className="icon" />
+                        </DeleteIcon>
+                        <Flex align="center" justify="flex-start" gap="2px">
+                          <Text type="tag" size="sm" weight="bold">
+                            JNE
+                          </Text>
+                          <Text size="sm" weight="bold">
+                            - JNE Trucking
+                          </Text>
+                        </Flex>
+                        <Flex justify="space-between" gap="2px" wrap>
+                          <Flex vertical gap="4px">
+                            <Text size="xs" weight="bold">
+                              Asal :
+                            </Text>
+                            <Text size="xs">Sleman, Yogyakarta</Text>
+                          </Flex>
+
+                          <Flex vertical gap="4px">
+                            <Text size="xs" weight="bold">
+                              Tujuan :
+                            </Text>
+                            <Text size="xs">Lombok Timur, NTB</Text>
+                          </Flex>
+
+                          <Flex vertical gap="4px">
+                            <Text size="xs" weight="bold">
+                              Berat :
+                            </Text>
+                            <Text size="xs">1 KG</Text>
+                          </Flex>
+                        </Flex>
+                      </HistoryItem>
+                    </>
+                  ) : (
+                    <NotFound>
+                      <Text size="lg" weight="bold">
+                        Belum Ada Histori
+                      </Text>
+                      <Text style={{ marginTop: "10px", lineHeight: "1.2rem" }}>
+                        Silakan simpan filter untuk membuat histori filter.
+                      </Text>
+                    </NotFound>
+                  )}
                 </HistoryContainer>
               ),
             },
@@ -266,6 +308,11 @@ const CourierCard = styled.div<{
 const HistoryContainer = styled.div`
   position: relative;
   min-height: 100px;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: start;
+  align-content: start;
+  gap: 20px;
 `;
 
 const NotFound = styled.div`
@@ -275,4 +322,45 @@ const NotFound = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
+`;
+
+const HistoryItem = styled.div`
+  position: relative;
+  padding: 8px 10px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 1px 1px 20px -10px rgba(0, 0, 0, 0.1);
+  transition: 0.3s ease;
+  outline: 1px solid white;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 1px 1px 40px -10px rgba(0, 0, 0, 0.1);
+    outline: 1px solid ${Colors.primary.light};
+  }
+`;
+
+const DeleteIcon = styled.div`
+  position: absolute;
+  right: -5px;
+  top: -10px;
+
+  width: 16px;
+  height: 16px;
+  padding: 2px;
+  border-radius: 16px;
+  outline: 1px solid ${Colors.primary.light};
+  background: white;
+
+  & .icon {
+    color: ${Colors.primary.grayDark};
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+  }
 `;
