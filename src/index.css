@@ -55,3 +55,10 @@ h5,
 h6 {
   overflow-wrap: break-word;
 }
+
+/* Customize antd styled */
+
+.ant-popover-inner {
+  padding: 0px !important;
+  overflow: hidden;
+}
