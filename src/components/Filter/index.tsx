@@ -1,8 +1,12 @@
 import { useContext } from "react";
-import { Button, Flex, Tabs } from "antd";
+import { Button, Flex, Popover, Tabs } from "antd";
 import styled, { css } from "styled-components";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  CheckIcon,
+  EllipsisHorizontalIcon,
+  XMarkIcon,
+} from "@heroicons/react/16/solid";
 
 import { FilterInputs, IndicatorColor } from "../../helpers/types";
 import { Colors, courierType, getCourierColor } from "../../helpers/utils";
@@ -193,9 +197,32 @@ export const Filter = () => {
                   {history.length ? (
                     <>
                       <HistoryItem>
-                        <DeleteIcon>
-                          <XMarkIcon className="icon" />
-                        </DeleteIcon>
+                        <Popover
+                          content={
+                            <Action>
+                              <ActionItem $color={Colors.primary.blue}>
+                                <CheckIcon className="action-icon" />
+                                <Text size="xs" color={Colors.primary.blue}>
+                                  Terapkan
+                                </Text>
+                              </ActionItem>
+                              <ActionItem $color={Colors.primary.red}>
+                                <XMarkIcon className="action-icon" />
+                                <Text size="xs" color={Colors.primary.red}>
+                                  Hapus
+                                </Text>
+                              </ActionItem>
+                            </Action>
+                          }
+                          title=""
+                          trigger="focus"
+                          arrow={false}
+                          placement="bottomRight"
+                        >
+                          <DeleteIcon>
+                            <EllipsisHorizontalIcon className="icon" />
+                          </DeleteIcon>
+                        </Popover>
                         <Flex align="center" justify="flex-start" gap="2px">
                           <Text type="tag" size="sm" weight="bold">
                             JNE
@@ -211,14 +238,68 @@ export const Filter = () => {
                             </Text>
                             <Text size="xs">Sleman, Yogyakarta</Text>
                           </Flex>
-
                           <Flex vertical gap="4px">
                             <Text size="xs" weight="bold">
                               Tujuan :
                             </Text>
                             <Text size="xs">Lombok Timur, NTB</Text>
                           </Flex>
-
+                          <Flex vertical gap="4px">
+                            <Text size="xs" weight="bold">
+                              Berat :
+                            </Text>
+                            <Text size="xs">1 KG</Text>
+                          </Flex>
+                        </Flex>
+                      </HistoryItem>
+                      <HistoryItem>
+                        <Popover
+                          content={
+                            <Action>
+                              <ActionItem $color={Colors.primary.blue}>
+                                <CheckIcon className="action-icon" />
+                                <Text size="xs" color={Colors.primary.blue}>
+                                  Terapkan
+                                </Text>
+                              </ActionItem>
+                              <ActionItem $color={Colors.primary.red}>
+                                <XMarkIcon className="action-icon" />
+                                <Text size="xs" color={Colors.primary.red}>
+                                  Hapus
+                                </Text>
+                              </ActionItem>
+                            </Action>
+                          }
+                          title=""
+                          trigger="focus"
+                          arrow={false}
+                          placement="bottomRight"
+                        >
+                          <DeleteIcon>
+                            <EllipsisHorizontalIcon className="icon" />
+                          </DeleteIcon>
+                        </Popover>
+                        <Flex align="center" justify="flex-start" gap="2px">
+                          <Text type="tag" size="sm" weight="bold">
+                            JNE
+                          </Text>
+                          <Text size="sm" weight="bold">
+                            - JNE Trucking
+                          </Text>
+                        </Flex>
+                        <Flex justify="space-between" gap="2px" wrap>
+                          <Flex vertical gap="4px">
+                            <Text size="xs" weight="bold">
+                              Asal :
+                            </Text>
+                            <Text size="xs">Sleman, Yogyakarta</Text>
+                          </Flex>
+                          <Flex vertical gap="4px">
+                            <Text size="xs" weight="bold">
+                              Tujuan :
+                            </Text>
+                            <Text size="xs">Lombok Timur, NTB</Text>
+                          </Flex>
                           <Flex vertical gap="4px">
                             <Text size="xs" weight="bold">
                               Berat :
@@ -331,28 +412,28 @@ const HistoryItem = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
-  box-shadow: 1px 1px 20px -10px rgba(0, 0, 0, 0.1);
   transition: 0.3s ease;
   outline: 1px solid white;
-  cursor: pointer;
+  outline: 1px solid ${Colors.primary.light};
 
   &:hover {
     box-shadow: 1px 1px 40px -10px rgba(0, 0, 0, 0.1);
-    outline: 1px solid ${Colors.primary.light};
   }
 `;
 
-const DeleteIcon = styled.div`
+const DeleteIcon = styled.button`
   position: absolute;
-  right: -5px;
-  top: -10px;
+  right: 5px;
+  top: 5px;
 
   width: 16px;
   height: 16px;
   padding: 2px;
   border-radius: 16px;
+  border: none;
   outline: 1px solid ${Colors.primary.light};
   background: white;
+  cursor: pointer;
 
   & .icon {
     color: ${Colors.primary.grayDark};
@@ -362,5 +443,35 @@ const DeleteIcon = styled.div`
     transform: translate(-50%, -50%);
     width: 12px;
     height: 12px;
+  }
+`;
+
+const Action = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  & > *:not(:last-child) {
+    border-bottom: 1px solid ${Colors.primary.light};
+  }
+`;
+
+const ActionItem = styled.button<{ $color: string }>`
+  padding: 8px 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: ${(props) => props.$color};
+  transition: 0.3s ease;
+
+  & .action-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  &:hover {
+    background: ${Colors.primary.light};
   }
 `;
