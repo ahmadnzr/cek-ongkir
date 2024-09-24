@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Button, Flex, Popover, Tabs } from "antd";
+import { Button, Flex, Tabs } from "antd";
 import styled, { css } from "styled-components";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import {
@@ -20,6 +20,27 @@ import { FilterResultCtx } from "../../helpers/lib";
 import { Text } from "../Text";
 import { InputSelect } from "../InputSelect";
 import { ControlledInputNumber } from "../ControlledInputNumber";
+import { MenuButton, MenuItemType } from "../MenuButton";
+
+/*TODO:
+ * Create Icon component
+ * for concistency
+ * */
+
+const menu: MenuItemType[] = [
+  {
+    id: 1,
+    label: "Terapkan",
+    icon: <CheckIcon className="action-icon" />,
+    color: Colors.primary.blue,
+  },
+  {
+    id: 2,
+    label: "Hapus",
+    icon: <XMarkIcon className="action-icon" />,
+    color: Colors.primary.red,
+  },
+];
 
 export const Filter = () => {
   const { setResults } = useContext(FilterResultCtx);
@@ -197,88 +218,17 @@ export const Filter = () => {
                   {history.length ? (
                     <>
                       <HistoryItem>
-                        <Popover
-                          content={
-                            <Action>
-                              <ActionItem $color={Colors.primary.blue}>
-                                <CheckIcon className="action-icon" />
-                                <Text size="xs" color={Colors.primary.blue}>
-                                  Terapkan
-                                </Text>
-                              </ActionItem>
-                              <ActionItem $color={Colors.primary.red}>
-                                <XMarkIcon className="action-icon" />
-                                <Text size="xs" color={Colors.primary.red}>
-                                  Hapus
-                                </Text>
-                              </ActionItem>
-                            </Action>
+                        <MenuButton
+                          onClickMenu={(item) => {
+                            console.warn({ item });
+                          }}
+                          menu={menu}
+                          trigger={
+                            <DeleteIcon>
+                              <EllipsisHorizontalIcon className="icon" />
+                            </DeleteIcon>
                           }
-                          title=""
-                          trigger="focus"
-                          arrow={false}
-                          placement="bottomRight"
-                        >
-                          <DeleteIcon>
-                            <EllipsisHorizontalIcon className="icon" />
-                          </DeleteIcon>
-                        </Popover>
-                        <Flex align="center" justify="flex-start" gap="2px">
-                          <Text type="tag" size="sm" weight="bold">
-                            JNE
-                          </Text>
-                          <Text size="sm" weight="bold">
-                            - JNE Trucking
-                          </Text>
-                        </Flex>
-                        <Flex justify="space-between" gap="2px" wrap>
-                          <Flex vertical gap="4px">
-                            <Text size="xs" weight="bold">
-                              Asal :
-                            </Text>
-                            <Text size="xs">Sleman, Yogyakarta</Text>
-                          </Flex>
-                          <Flex vertical gap="4px">
-                            <Text size="xs" weight="bold">
-                              Tujuan :
-                            </Text>
-                            <Text size="xs">Lombok Timur, NTB</Text>
-                          </Flex>
-                          <Flex vertical gap="4px">
-                            <Text size="xs" weight="bold">
-                              Berat :
-                            </Text>
-                            <Text size="xs">1 KG</Text>
-                          </Flex>
-                        </Flex>
-                      </HistoryItem>
-                      <HistoryItem>
-                        <Popover
-                          content={
-                            <Action>
-                              <ActionItem $color={Colors.primary.blue}>
-                                <CheckIcon className="action-icon" />
-                                <Text size="xs" color={Colors.primary.blue}>
-                                  Terapkan
-                                </Text>
-                              </ActionItem>
-                              <ActionItem $color={Colors.primary.red}>
-                                <XMarkIcon className="action-icon" />
-                                <Text size="xs" color={Colors.primary.red}>
-                                  Hapus
-                                </Text>
-                              </ActionItem>
-                            </Action>
-                          }
-                          title=""
-                          trigger="focus"
-                          arrow={false}
-                          placement="bottomRight"
-                        >
-                          <DeleteIcon>
-                            <EllipsisHorizontalIcon className="icon" />
-                          </DeleteIcon>
-                        </Popover>
+                        />
                         <Flex align="center" justify="flex-start" gap="2px">
                           <Text type="tag" size="sm" weight="bold">
                             JNE
@@ -443,35 +393,5 @@ const DeleteIcon = styled.button`
     transform: translate(-50%, -50%);
     width: 12px;
     height: 12px;
-  }
-`;
-
-const Action = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  & > *:not(:last-child) {
-    border-bottom: 1px solid ${Colors.primary.light};
-  }
-`;
-
-const ActionItem = styled.button<{ $color: string }>`
-  padding: 8px 10px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  color: ${(props) => props.$color};
-  transition: 0.3s ease;
-
-  & .action-icon {
-    width: 16px;
-    height: 16px;
-  }
-
-  &:hover {
-    background: ${Colors.primary.light};
   }
 `;
