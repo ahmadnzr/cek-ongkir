@@ -3,8 +3,18 @@ import { Button } from "antd";
 import styled, { css } from "styled-components";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
-import { FilterInputs, IndicatorColor } from "../../helpers/types";
-import { Colors, courierType, getCourierColor } from "../../helpers/utils";
+import {
+  FilterInputs,
+  IndicatorColor,
+  SaveFilterType,
+} from "../../helpers/types";
+import {
+  Colors,
+  courierType,
+  getCourierColor,
+  getLocalStorage,
+  setLocalStorage,
+} from "../../helpers/utils";
 import {
   useFecthCost,
   useFetchCity,
@@ -28,6 +38,10 @@ export const FilterForm = () => {
 
   const fromProvince = watch("fromProvince");
   const toProvince = watch("toProvince");
+  const fromCity = watch("fromCity");
+  const toCity = watch("toCity");
+  const weight = watch("weight");
+  const courier = watch("courier");
 
   const { data: province } = useFetchProvince();
   const { data: cities } = useFetchCity({ provinceId: fromProvince });
@@ -48,6 +62,29 @@ export const FilterForm = () => {
         },
       },
     );
+  };
+
+  const handleSave = (data: FilterInputs) => {
+    try {
+      const savedFilter =
+        getLocalStorage<SaveFilterType[]>("SAVE_FILTER") || [];
+      const save: SaveFilterType = {
+        fromProvince: province?.find(
+          (item) => item.province_id === data.fromProvince,
+        ),
+        toProvince: province?.find(
+          (item) => item.province_id === data.toProvince,
+        ),
+        fromCity: cities?.find((item) => item.city_id === data.fromCity),
+        toCity: toCities?.find((item) => item.city_id === data.toCity),
+        weight: data.weight,
+        courier: data.courier,
+      };
+
+      setLocalStorage<SaveFilterType[]>("SAVE_FILTER", [...savedFilter, save]);
+    } catch (err) {
+      console.warn("error", { err });
+    }
   };
 
   return (
@@ -166,7 +203,21 @@ export const FilterForm = () => {
           >
             Reset
           </Button>
-          <Button disabled={!isValid}>Simpan Filter</Button>
+          <Button
+            onClick={() =>
+              handleSave({
+                fromProvince,
+                toProvince,
+                fromCity,
+                toCity,
+                weight,
+                courier,
+              })
+            }
+            disabled={!isValid}
+          >
+            Simpan Filter
+          </Button>
         </FilterButton>
       </FilterContainer>
     </form>

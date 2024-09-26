@@ -60,3 +60,12 @@ export type FilterInputs = {
   weight: string;
   courier: CourierType;
 };
+
+export interface SaveFilterType {
+  fromProvince?: Province;
+  fromCity?: City;
+  toProvince?: Province;
+  toCity?: City;
+  weight: string;
+  courier: CourierType;
+}
