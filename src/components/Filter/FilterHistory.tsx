@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 import { Flex } from "antd";
 import {
@@ -7,12 +8,13 @@ import {
 } from "@heroicons/react/16/solid";
 
 import { Colors } from "../../helpers/utils";
+import { SaveFilterType } from "../../helpers/types";
 
 import { Text } from "../Text";
 import { MenuButton, MenuItemType } from "../MenuButton";
 
 interface Props {
-  history: string[];
+  history: SaveFilterType[];
 }
 
 const menu: MenuItemType[] = [
@@ -33,8 +35,8 @@ const menu: MenuItemType[] = [
 export const FilterHistory = ({ history }: Props) => {
   return (
     <HistoryContainer>
-      {history.length ? (
-        <>
+      {history.map((item, id) => (
+        <React.Fragment key={id}>
           <HistoryItem>
             <MenuButton
               onClickMenu={(item) => {
@@ -47,37 +49,38 @@ export const FilterHistory = ({ history }: Props) => {
                 </DeleteIcon>
               }
             />
-            <Flex align="center" justify="flex-start" gap="2px">
-              <Text type="tag" size="sm" weight="bold">
-                JNE
-              </Text>
-              <Text size="sm" weight="bold">
-                - JNE Trucking
-              </Text>
-            </Flex>
+            <Text type="tag" size="sm" weight="bold">
+              {item.courier}
+            </Text>
             <Flex justify="space-between" gap="2px" wrap>
-              <Flex vertical gap="4px">
+              <Flex vertical gap="4px" flex={1}>
                 <Text size="xs" weight="bold">
                   Asal :
                 </Text>
-                <Text size="xs">Sleman, Yogyakarta</Text>
+                <Text size="xs">
+                  {item.fromCity?.city_name}, {item.fromCity?.province}
+                </Text>
               </Flex>
-              <Flex vertical gap="4px">
+              <Flex vertical gap="4px" flex={1}>
                 <Text size="xs" weight="bold">
                   Tujuan :
                 </Text>
-                <Text size="xs">Lombok Timur, NTB</Text>
+                <Text size="xs">
+                  {item.toCity?.city_name}, {item.toCity?.province}
+                </Text>
               </Flex>
               <Flex vertical gap="4px">
                 <Text size="xs" weight="bold">
                   Berat :
                 </Text>
-                <Text size="xs">1 KG</Text>
+                <Text size="xs">{item.weight} Kg</Text>
               </Flex>
             </Flex>
           </HistoryItem>
-        </>
-      ) : (
+        </React.Fragment>
+      ))}
+
+      {!history.length ? (
         <NotFound>
           <Text size="lg" weight="bold">
             Belum Ada Histori
@@ -86,7 +89,7 @@ export const FilterHistory = ({ history }: Props) => {
             Silakan simpan filter untuk membuat histori filter.
           </Text>
         </NotFound>
-      )}
+      ) : null}
     </HistoryContainer>
   );
 };
