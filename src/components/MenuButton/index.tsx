@@ -5,23 +5,23 @@ import styled from "styled-components";
 import { Text } from "../Text";
 import { Colors } from "../../helpers/utils";
 
-export interface MenuItemType {
-  id: number;
+export interface MenuItemType<T = number> {
+  key: T;
   label: string;
   icon: React.ReactNode;
   color: string;
 }
 
-interface Props {
+interface Props<T> {
   trigger: React.ReactNode;
-  menu: MenuItemType[];
-  onClickMenu: (item: MenuItemType) => void;
+  menu: MenuItemType<T>[];
+  onClickMenu: (item: MenuItemType<T>) => void;
 }
 
-export const MenuButton = ({ trigger, menu, onClickMenu }: Props) => {
+export const MenuButton = <T,>({ trigger, menu, onClickMenu }: Props<T>) => {
   const [open, setOpen] = useState(false);
 
-  const handleClickMenu = (menu: MenuItemType) => {
+  const handleClickMenu = (menu: MenuItemType<T>) => {
     setOpen(false);
     onClickMenu(menu);
   };
@@ -39,10 +39,10 @@ export const MenuButton = ({ trigger, menu, onClickMenu }: Props) => {
       onOpenChange={handleOpenChange}
       content={
         <Action>
-          {menu.map((item) => (
+          {menu.map((item, i) => (
             <ActionItem
               $color={item.color}
-              key={item.id}
+              key={i}
               onClick={() => handleClickMenu(item)}
             >
               {item.icon}
