@@ -62,6 +62,7 @@ export type FilterInputs = {
 };
 
 export interface SaveFilterType {
+  id: React.Key;
   fromProvince?: Province;
   fromCity?: City;
   toProvince?: Province;
