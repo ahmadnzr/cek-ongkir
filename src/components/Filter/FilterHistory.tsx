@@ -7,7 +7,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/16/solid";
 
-import { Colors } from "../../helpers/utils";
+import { Colors, getLocalStorage, setLocalStorage } from "../../helpers/utils";
 import { SaveFilterType } from "../../helpers/types";
 
 import { Text } from "../Text";
@@ -17,15 +17,17 @@ interface Props {
   history: SaveFilterType[];
 }
 
-const menu: MenuItemType[] = [
+type MenuType = MenuItemType<"DELETE" | "APPLY">;
+
+const menu: MenuType[] = [
   {
-    id: 1,
+    key: "APPLY",
     label: "Terapkan",
     icon: <CheckIcon className="action-icon" />,
     color: Colors.primary.blue,
   },
   {
-    id: 2,
+    key: "DELETE",
     label: "Hapus",
     icon: <XMarkIcon className="action-icon" />,
     color: Colors.primary.red,
@@ -33,15 +35,23 @@ const menu: MenuItemType[] = [
 ];
 
 export const FilterHistory = ({ history }: Props) => {
+  const handleClickAction = (action: MenuType, data: SaveFilterType) => {
+    const savedFilter = getLocalStorage<SaveFilterType[]>("SAVE_FILTER") || [];
+
+    if (action.key === "DELETE") {
+      const newFilterList = savedFilter.filter((item) => item.id !== data.id);
+      setLocalStorage<SaveFilterType[]>("SAVE_FILTER", newFilterList);
+      return;
+    }
+  };
+
   return (
     <HistoryContainer>
       {history.map((item, id) => (
         <React.Fragment key={id}>
           <HistoryItem>
             <MenuButton
-              onClickMenu={(item) => {
-                console.warn({ item });
-              }}
+              onClickMenu={(action) => handleClickAction(action, item)}
               menu={menu}
               trigger={
                 <DeleteIcon>

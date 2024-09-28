@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Button } from "antd";
+import { Button, Modal } from "antd";
 import styled, { css } from "styled-components";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
@@ -68,7 +68,18 @@ export const FilterForm = () => {
     try {
       const savedFilter =
         getLocalStorage<SaveFilterType[]>("SAVE_FILTER") || [];
+
+      const newId = `${data.fromCity}/${data.toCity}/${weight}/${courier}`;
+      const invalidID = savedFilter.some((item) => item.id === newId);
+
+      if (invalidID) {
+        throw new Error(
+          "Filter sudah ada pada history. Silakan buat filter baru untuk menyimpan filter.",
+        );
+      }
+
       const save: SaveFilterType = {
+        id: `${data.fromCity}/${data.toCity}/${weight}/${courier}`,
         fromProvince: province?.find(
           (item) => item.province_id === data.fromProvince,
         ),
@@ -82,8 +93,19 @@ export const FilterForm = () => {
       };
 
       setLocalStorage<SaveFilterType[]>("SAVE_FILTER", [...savedFilter, save]);
-    } catch (err) {
-      console.warn("error", { err });
+
+      Modal.success({
+        title: "Filter Berhasil Disimpan",
+        content: "Silakan melihat filter yang tersimpan pada tab histori.",
+      });
+    } catch (err: unknown) {
+      const error =
+        err instanceof Error ? err.message : "Unknown error occurred";
+
+      Modal.error({
+        title: "Filter Gagal Disimpan",
+        content: error,
+      });
     }
   };
 
