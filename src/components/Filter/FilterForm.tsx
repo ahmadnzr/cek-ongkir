@@ -13,7 +13,6 @@ import {
   courierType,
   getCourierColor,
   getLocalStorage,
-  setLocalStorage,
 } from "../../helpers/utils";
 import {
   useFecthCost,
@@ -27,7 +26,7 @@ import { InputSelect } from "../InputSelect";
 import { ControlledInputNumber } from "../ControlledInputNumber";
 
 export const FilterForm = () => {
-  const { setResults } = useContext(FilterResultCtx);
+  const { setResults, setHistory } = useContext(FilterResultCtx);
   const {
     handleSubmit,
     watch,
@@ -92,7 +91,7 @@ export const FilterForm = () => {
         courier: data.courier,
       };
 
-      setLocalStorage<SaveFilterType[]>("SAVE_FILTER", [...savedFilter, save]);
+      setHistory(save);
 
       Modal.success({
         title: "Filter Berhasil Disimpan",
