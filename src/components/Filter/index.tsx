@@ -1,9 +1,7 @@
-import { useCallback, useEffect, useState } from "react";
 import { Tabs } from "antd";
 import styled from "styled-components";
 
-import { SaveFilterType } from "../../helpers/types";
-import { getLocalStorage } from "../../helpers/utils";
+import { useFilterResultCtx } from "../../helpers/lib";
 
 import { FilterHistory } from "./FilterHistory";
 import { FilterForm } from "./FilterForm";
@@ -14,20 +12,7 @@ import { FilterForm } from "./FilterForm";
  * */
 
 export const Filter = () => {
-  const [history, setHistory] = useState<SaveFilterType[]>([]);
-
-  const getHistory = useCallback(() => {
-    const savedFilter = getLocalStorage<SaveFilterType[]>("SAVE_FILTER") || [];
-    setHistory(savedFilter);
-  }, []);
-
-  useEffect(() => {
-    getHistory();
-
-    return () => {
-      setHistory([]);
-    };
-  }, []);
+  const { history } = useFilterResultCtx();
 
   return (
     <Container>

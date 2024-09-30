@@ -7,8 +7,9 @@ import {
   XMarkIcon,
 } from "@heroicons/react/16/solid";
 
-import { Colors, getLocalStorage, setLocalStorage } from "../../helpers/utils";
+import { Colors } from "../../helpers/utils";
 import { SaveFilterType } from "../../helpers/types";
+import { useFilterResultCtx } from "../../helpers/lib";
 
 import { Text } from "../Text";
 import { MenuButton, MenuItemType } from "../MenuButton";
@@ -35,12 +36,11 @@ const menu: MenuType[] = [
 ];
 
 export const FilterHistory = ({ history }: Props) => {
-  const handleClickAction = (action: MenuType, data: SaveFilterType) => {
-    const savedFilter = getLocalStorage<SaveFilterType[]>("SAVE_FILTER") || [];
+  const { deleteHistory } = useFilterResultCtx();
 
+  const handleClickAction = (action: MenuType, data: SaveFilterType) => {
     if (action.key === "DELETE") {
-      const newFilterList = savedFilter.filter((item) => item.id !== data.id);
-      setLocalStorage<SaveFilterType[]>("SAVE_FILTER", newFilterList);
+      deleteHistory(data);
       return;
     }
   };
