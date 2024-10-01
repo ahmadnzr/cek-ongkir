@@ -7,7 +7,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/16/solid";
 
-import { Colors } from "../../helpers/utils";
+import { Colors, getCourierColor } from "../../helpers/utils";
 import { SaveFilterType } from "../../helpers/types";
 import { useFilterResultCtx } from "../../helpers/lib";
 
@@ -59,7 +59,12 @@ export const FilterHistory = ({ history }: Props) => {
                 </DeleteIcon>
               }
             />
-            <Text type="tag" size="sm" weight="bold">
+            <Text
+              type="tag"
+              size="sm"
+              weight="bold"
+              tagColor={getCourierColor(item.courier)}
+            >
               {item.courier}
             </Text>
             <Flex justify="space-between" gap="2px" wrap>
