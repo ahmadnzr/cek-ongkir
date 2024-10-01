@@ -36,13 +36,15 @@ const menu: MenuType[] = [
 ];
 
 export const FilterHistory = ({ history }: Props) => {
-  const { deleteHistory } = useFilterResultCtx();
+  const { deleteHistory, applyHistory } = useFilterResultCtx();
 
   const handleClickAction = (action: MenuType, data: SaveFilterType) => {
     if (action.key === "DELETE") {
       deleteHistory(data);
       return;
     }
+
+    applyHistory(data);
   };
 
   return (
