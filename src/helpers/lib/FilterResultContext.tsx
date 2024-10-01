@@ -8,6 +8,7 @@ import React, {
 
 import { Courier, SaveFilterType } from "../types";
 import { getLocalStorage, setLocalStorage } from "../utils";
+import { useFecthCost } from "../hooks";
 
 interface FilterResultType {
   results: Courier[];
@@ -15,6 +16,7 @@ interface FilterResultType {
   setResults: (courier: Courier[]) => void;
   setHistory: (history: SaveFilterType) => void;
   deleteHistory: (history: SaveFilterType) => void;
+  applyHistory: (history: SaveFilterType) => void;
 }
 
 export const FilterResultCtx = createContext<FilterResultType>({
@@ -23,6 +25,7 @@ export const FilterResultCtx = createContext<FilterResultType>({
   setResults: () => {},
   setHistory: () => {},
   deleteHistory: () => {},
+  applyHistory: () => {},
 });
 
 export const FilterResultContainer = ({
@@ -30,6 +33,8 @@ export const FilterResultContainer = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const { mutate } = useFecthCost();
+
   const [filterResult, setFilterResult] = useState<Courier[]>([]);
   const [history, setHistory] = useState<SaveFilterType[]>([]);
 
@@ -52,6 +57,22 @@ export const FilterResultContainer = ({
     handleSaveHistory(newHistory);
   };
 
+  const handleApplyHistory = (item: SaveFilterType) => {
+    mutate(
+      {
+        origin: item.fromCity?.city_id || "",
+        destination: item.toCity?.city_id || "",
+        weight: (parseInt(item.weight) * 1000).toString(), // in gram
+        courier: item.courier,
+      },
+      {
+        onSuccess: (data) => {
+          setFilterResult(data.rajaongkir.results);
+        },
+      },
+    );
+  };
+
   const getHistory = useCallback(() => {
     const savedFilter = getLocalStorage<SaveFilterType[]>("SAVE_FILTER") || [];
 
@@ -70,6 +91,7 @@ export const FilterResultContainer = ({
         setResults: handleSetResult,
         setHistory: handleSetHistory,
         deleteHistory: handleDeleteHistory,
+        applyHistory: handleApplyHistory,
       }}
     >
       {children}
