@@ -8,7 +8,7 @@ import React, {
 
 import { Courier, SaveFilterType } from "../types";
 import { getLocalStorage, setLocalStorage } from "../utils";
-import { useFecthCost } from "../hooks";
+import { useFetchCost } from "../hooks";
 
 interface FilterResultType {
   results: Courier[];
@@ -33,7 +33,7 @@ export const FilterResultContainer = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { mutate } = useFecthCost();
+  const { mutate } = useFetchCost();
 
   const [filterResult, setFilterResult] = useState<Courier[]>([]);
   const [history, setHistory] = useState<SaveFilterType[]>([]);
