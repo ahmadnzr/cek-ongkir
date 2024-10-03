@@ -10,12 +10,14 @@ import { type DefaultOptionType } from "antd/es/select";
 interface InputSelectProps<T extends FieldValues, Y extends Path<T>>
   extends UseControllerProps<T, Y> {
   options?: DefaultOptionType[];
+  customOnChange?: (data: string) => void;
 }
 
 export const InputSelect = <T extends FieldValues, Y extends Path<T>>({
   control,
   name,
   options,
+  customOnChange,
 }: InputSelectProps<T, Y>) => {
   return (
     <Controller
@@ -28,7 +30,12 @@ export const InputSelect = <T extends FieldValues, Y extends Path<T>>({
           value={value}
           options={options}
           placeholder="Pilih"
-          onChange={onChange}
+          onChange={(val) => {
+            if (typeof customOnChange === "function") {
+              customOnChange(val);
+            }
+            onChange(val);
+          }}
         />
       )}
     />

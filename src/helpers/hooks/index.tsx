@@ -17,21 +17,13 @@ export const useFetchProvince = () => {
   });
 };
 
-export const useFetchCity = ({ provinceId }: { provinceId?: string }) => {
-  return useQuery({
-    refetchOnWindowFocus: false,
-    queryKey: ["city", provinceId],
-    retry: false,
-    queryFn: () => getCities(provinceId),
-    select: (data) => {
-      const newData = data?.rajaongkir.results;
-      return newData;
-    },
-    enabled: Boolean(provinceId),
+export const useFetchCity = () =>
+  useMutation({
+    mutationFn: (params: string) =>
+      getCities(params).then((data) => data?.rajaongkir.results),
   });
-};
 
-export const useFecthCost = () => {
+export const useFetchCost = () => {
   return useMutation<APIRes<Courier[]>, AxiosError<object>, CostRequest>({
     mutationKey: ["cost"],
     mutationFn: (vars) => getCost(vars),

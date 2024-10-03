@@ -15,7 +15,7 @@ import {
   getLocalStorage,
 } from "../../helpers/utils";
 import {
-  useFecthCost,
+  useFetchCost,
   useFetchCity,
   useFetchProvince,
 } from "../../helpers/hooks";
@@ -29,23 +29,16 @@ export const FilterForm = () => {
   const { setResults, setHistory } = useContext(FilterResultCtx);
   const {
     handleSubmit,
-    watch,
     control,
     reset,
     formState: { isValid },
+    getValues,
   } = useForm<FilterInputs>();
 
-  const fromProvince = watch("fromProvince");
-  const toProvince = watch("toProvince");
-  const fromCity = watch("fromCity");
-  const toCity = watch("toCity");
-  const weight = watch("weight");
-  const courier = watch("courier");
-
   const { data: province } = useFetchProvince();
-  const { data: cities } = useFetchCity({ provinceId: fromProvince });
-  const { data: toCities } = useFetchCity({ provinceId: toProvince });
-  const { mutate, isLoading } = useFecthCost();
+  const { mutate: getFromCities, data: fromCities } = useFetchCity();
+  const { mutate: getDestinationCities, data: toCities } = useFetchCity();
+  const { mutate, isLoading } = useFetchCost();
 
   const onSubmit: SubmitHandler<FilterInputs> = (data) => {
     mutate(
@@ -63,12 +56,13 @@ export const FilterForm = () => {
     );
   };
 
-  const handleSave = (data: FilterInputs) => {
+  const handleSave = () => {
     try {
+      const formValues = getValues();
       const savedFilter =
         getLocalStorage<SaveFilterType[]>("SAVE_FILTER") || [];
 
-      const newId = `${data.fromCity}/${data.toCity}/${weight}/${courier}`;
+      const newId = `${formValues.fromCity}/${formValues.toCity}/${formValues.weight}/${formValues.courier}`;
       const invalidID = savedFilter.some((item) => item.id === newId);
 
       if (invalidID) {
@@ -78,17 +72,19 @@ export const FilterForm = () => {
       }
 
       const save: SaveFilterType = {
-        id: `${data.fromCity}/${data.toCity}/${weight}/${courier}`,
+        id: `${formValues.fromCity}/${formValues.toCity}/${formValues.weight}/${formValues.courier}`,
         fromProvince: province?.find(
-          (item) => item.province_id === data.fromProvince,
+          (item) => item.province_id === formValues.fromProvince,
         ),
         toProvince: province?.find(
-          (item) => item.province_id === data.toProvince,
+          (item) => item.province_id === formValues.toProvince,
         ),
-        fromCity: cities?.find((item) => item.city_id === data.fromCity),
-        toCity: toCities?.find((item) => item.city_id === data.toCity),
-        weight: data.weight,
-        courier: data.courier,
+        fromCity: fromCities?.find(
+          (item) => item.city_id === formValues.fromCity,
+        ),
+        toCity: toCities?.find((item) => item.city_id === formValues.toCity),
+        weight: formValues.weight,
+        courier: formValues.courier,
       };
 
       setHistory(save);
@@ -125,6 +121,7 @@ export const FilterForm = () => {
                   label: item.province,
                   value: item.province_id,
                 }))}
+                customOnChange={(val) => getFromCities(val)}
               />
             </SelectFilter>
             <SelectFilter>
@@ -132,7 +129,7 @@ export const FilterForm = () => {
               <InputSelect
                 control={control}
                 name="fromCity"
-                options={cities?.map((item) => ({
+                options={fromCities?.map((item) => ({
                   label: item.city_name,
                   value: item.city_id,
                 }))}
@@ -154,6 +151,7 @@ export const FilterForm = () => {
                   label: item.province,
                   value: item.province_id,
                 }))}
+                customOnChange={(val) => getDestinationCities(val)}
               />
             </SelectFilter>
             <SelectFilter>
@@ -224,19 +222,7 @@ export const FilterForm = () => {
           >
             Reset
           </Button>
-          <Button
-            onClick={() =>
-              handleSave({
-                fromProvince,
-                toProvince,
-                fromCity,
-                toCity,
-                weight,
-                courier,
-              })
-            }
-            disabled={!isValid}
-          >
+          <Button onClick={handleSave} disabled={!isValid}>
             Simpan Filter
           </Button>
         </FilterButton>
