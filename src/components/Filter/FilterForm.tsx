@@ -60,7 +60,7 @@ export const FilterForm = () => {
 
     mutate(
       {
-        origin,
+        origin: fromCity,
         destination: toCity,
         weight: (parseInt(weight) * 1000).toString(), // in gram
         courier,
