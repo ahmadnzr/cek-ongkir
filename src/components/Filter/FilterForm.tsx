@@ -26,27 +26,44 @@ import { InputSelect } from "../InputSelect";
 import { ControlledInputNumber } from "../ControlledInputNumber";
 
 export const FilterForm = () => {
-  const { setResults, setHistory } = useContext(FilterResultCtx);
+  const { setResults, setHistory, defaultFilter } = useContext(FilterResultCtx);
   const {
     handleSubmit,
     control,
     reset,
     formState: { isValid },
     getValues,
-  } = useForm<FilterInputs>();
+    watch,
+    setValue,
+  } = useForm<FilterInputs>({
+    values: {
+      fromProvince: defaultFilter?.fromProvince?.province_id,
+      toProvince: defaultFilter?.toProvince?.province_id,
+      fromCity: defaultFilter?.fromCity?.city_id,
+      toCity: defaultFilter?.toCity?.city_id,
+      weight: defaultFilter?.weight,
+      courier: defaultFilter?.courier,
+    },
+  });
+
+  const fromProvince = watch("fromProvince");
+  const toProvince = watch("toProvince");
 
   const { data: province } = useFetchProvince();
-  const { mutate: getFromCities, data: fromCities } = useFetchCity();
-  const { mutate: getDestinationCities, data: toCities } = useFetchCity();
+  const { data: fromCities } = useFetchCity(fromProvince);
+  const { data: toCities } = useFetchCity(toProvince);
   const { mutate, isLoading } = useFetchCost();
 
   const onSubmit: SubmitHandler<FilterInputs> = (data) => {
+    const { fromCity, toCity, weight, courier } = data;
+    if (!fromCity || !toCity || !weight || !courier) return;
+
     mutate(
       {
-        origin: data.fromCity,
-        destination: data.toCity,
-        weight: (parseInt(data.weight) * 1000).toString(), // in gram
-        courier: data.courier,
+        origin,
+        destination: toCity,
+        weight: (parseInt(weight) * 1000).toString(), // in gram
+        courier,
       },
       {
         onSuccess: (data) => {
@@ -58,11 +75,14 @@ export const FilterForm = () => {
 
   const handleSave = () => {
     try {
-      const formValues = getValues();
+      const { fromProvince, toProvince, fromCity, toCity, weight, courier } =
+        getValues();
+      if (!weight || !courier) return;
+
       const savedFilter =
         getLocalStorage<SaveFilterType[]>("SAVE_FILTER") || [];
 
-      const newId = `${formValues.fromCity}/${formValues.toCity}/${formValues.weight}/${formValues.courier}`;
+      const newId = `${fromCity}/${toCity}/${weight}/${courier}`;
       const invalidID = savedFilter.some((item) => item.id === newId);
 
       if (invalidID) {
@@ -72,19 +92,15 @@ export const FilterForm = () => {
       }
 
       const save: SaveFilterType = {
-        id: `${formValues.fromCity}/${formValues.toCity}/${formValues.weight}/${formValues.courier}`,
+        id: `${fromCity}/${toCity}/${weight}/${courier}`,
         fromProvince: province?.find(
-          (item) => item.province_id === formValues.fromProvince,
+          (item) => item.province_id === fromProvince,
         ),
-        toProvince: province?.find(
-          (item) => item.province_id === formValues.toProvince,
-        ),
-        fromCity: fromCities?.find(
-          (item) => item.city_id === formValues.fromCity,
-        ),
-        toCity: toCities?.find((item) => item.city_id === formValues.toCity),
-        weight: formValues.weight,
-        courier: formValues.courier,
+        toProvince: province?.find((item) => item.province_id === toProvince),
+        fromCity: fromCities?.find((item) => item.city_id === fromCity),
+        toCity: toCities?.find((item) => item.city_id === toCity),
+        weight: weight,
+        courier: courier,
       };
 
       setHistory(save);
@@ -104,6 +120,15 @@ export const FilterForm = () => {
     }
   };
 
+  const handleManualReset = () => {
+    setValue("courier", undefined);
+    setValue("weight", undefined);
+    setValue("fromProvince", undefined);
+    setValue("toProvince", undefined);
+    setValue("toCity", undefined);
+    setValue("fromCity", undefined);
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <FilterContainer>
@@ -121,7 +146,6 @@ export const FilterForm = () => {
                   label: item.province,
                   value: item.province_id,
                 }))}
-                customOnChange={(val) => getFromCities(val)}
               />
             </SelectFilter>
             <SelectFilter>
@@ -151,7 +175,6 @@ export const FilterForm = () => {
                   label: item.province,
                   value: item.province_id,
                 }))}
-                customOnChange={(val) => getDestinationCities(val)}
               />
             </SelectFilter>
             <SelectFilter>
@@ -218,6 +241,7 @@ export const FilterForm = () => {
             onClick={() => {
               reset();
               setResults([]);
+              handleManualReset();
             }}
           >
             Reset

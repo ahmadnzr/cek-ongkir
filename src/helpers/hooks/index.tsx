@@ -17,10 +17,15 @@ export const useFetchProvince = () => {
   });
 };
 
-export const useFetchCity = () =>
-  useMutation({
-    mutationFn: (params: string) =>
-      getCities(params).then((data) => data?.rajaongkir.results),
+export const useFetchCity = (provinceId?: string) =>
+  useQuery({
+    refetchOnWindowFocus: false,
+    retry: false,
+    refetchOnMount: false,
+    queryKey: ["city", provinceId],
+    queryFn: () => getCities(provinceId),
+    select: (data) => data?.rajaongkir.results,
+    enabled: Boolean(provinceId),
   });
 
 export const useFetchCost = () => {
