@@ -14,6 +14,6 @@
 - **Axios**: For handling API communication with RajaOngkir.
 
 ## TODO List Feature
-- [ ] Filter History.
+- [x] Filter History.
 - [ ] Darkmode.
 - [ ] Better UI for Desktop Device.
