@@ -11,6 +11,7 @@ import { getLocalStorage, setLocalStorage } from "../utils";
 import { useFetchCost } from "../hooks";
 
 interface FilterResultType {
+  defaultFilter: SaveFilterType | null;
   results: Courier[];
   history: SaveFilterType[];
   setResults: (courier: Courier[]) => void;
@@ -20,6 +21,7 @@ interface FilterResultType {
 }
 
 export const FilterResultCtx = createContext<FilterResultType>({
+  defaultFilter: null,
   results: [],
   history: [],
   setResults: () => {},
@@ -37,6 +39,9 @@ export const FilterResultContainer = ({
 
   const [filterResult, setFilterResult] = useState<Courier[]>([]);
   const [history, setHistory] = useState<SaveFilterType[]>([]);
+  const [appliedHistory, setAppliedHistory] = useState<SaveFilterType | null>(
+    null,
+  );
 
   const handleSetResult = (result: Courier[]) => {
     setFilterResult(result);
@@ -57,7 +62,8 @@ export const FilterResultContainer = ({
     handleSaveHistory(newHistory);
   };
 
-  const handleApplyHistory = (item: SaveFilterType) => {
+  const handleApplyHistory = async (item: SaveFilterType) => {
+    setAppliedHistory(item);
     mutate(
       {
         origin: item.fromCity?.city_id || "",
@@ -86,6 +92,7 @@ export const FilterResultContainer = ({
   return (
     <FilterResultCtx.Provider
       value={{
+        defaultFilter: appliedHistory,
         history,
         results: filterResult,
         setResults: handleSetResult,
