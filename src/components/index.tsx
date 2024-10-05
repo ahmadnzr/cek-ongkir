@@ -7,3 +7,4 @@ export * from "./Filter";
 export * from "./Footer";
 export * from "./ServiceCourierItem";
 export * from "./MenuButton";
+export * from "./Icon";

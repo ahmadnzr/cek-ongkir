@@ -1,11 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { Flex } from "antd";
-import {
-  CheckIcon,
-  EllipsisHorizontalIcon,
-  XMarkIcon,
-} from "@heroicons/react/16/solid";
 
 import { Colors, getCourierColor } from "../../helpers/utils";
 import { SaveFilterType } from "../../helpers/types";
@@ -13,6 +8,7 @@ import { useFilterResultCtx } from "../../helpers/lib";
 
 import { Text } from "../Text";
 import { MenuButton, MenuItemType } from "../MenuButton";
+import { Icon } from "../Icon";
 
 interface Props {
   history: SaveFilterType[];
@@ -24,13 +20,13 @@ const menu: MenuType[] = [
   {
     key: "APPLY",
     label: "Terapkan",
-    icon: <CheckIcon className="action-icon" />,
+    icon: <Icon name="check" className="action-icon" />,
     color: Colors.primary.blue,
   },
   {
     key: "DELETE",
     label: "Hapus",
-    icon: <XMarkIcon className="action-icon" />,
+    icon: <Icon name="xMark" className="action-icon" />,
     color: Colors.primary.red,
   },
 ];
@@ -57,7 +53,7 @@ export const FilterHistory = ({ history }: Props) => {
               menu={menu}
               trigger={
                 <DeleteIcon>
-                  <EllipsisHorizontalIcon className="icon" />
+                  <Icon name="ellipsis" className="icon" />
                 </DeleteIcon>
               }
             />
