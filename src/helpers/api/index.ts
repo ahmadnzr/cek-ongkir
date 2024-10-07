@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from "axios";
-import { APIRes, City, CostRequest, Courier, Province } from "../types/";
+import { APIRes, City, CostRequest, Courier, Province } from "@helpers/types";
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL:

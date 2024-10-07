@@ -1,8 +1,8 @@
 import { HTMLAttributes } from "react";
 import styled, { css } from "styled-components";
 
-import { FontSize, FontWeight, IndicatorColor } from "../../helpers/types";
-import { Colors } from "../../helpers/utils";
+import { FontSize, FontWeight, IndicatorColor } from "@helpers/types";
+import { Colors } from "@helpers/utils";
 
 interface Props extends HTMLAttributes<HTMLParagraphElement> {
   size?: FontSize;

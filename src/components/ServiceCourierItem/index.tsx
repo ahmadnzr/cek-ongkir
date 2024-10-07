@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-import { Colors, formatRupiah, getCourierColor } from "../../helpers/utils";
-import { CourierDetail, CourierType } from "../../helpers/types";
+import { Colors, formatRupiah, getCourierColor } from "@helpers/utils";
+import { CourierDetail, CourierType } from "@helpers/types";
 
-import { Text } from "../Text";
+import { Text } from "@components";
 
 interface Props {
   cost?: CourierDetail;

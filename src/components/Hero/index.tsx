@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { Text } from "../Text";
+import { Text } from "@components";
 
 export const Hero = () => {
   return (

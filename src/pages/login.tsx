@@ -4,8 +4,8 @@ import styled from "styled-components";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { Navigate, useNavigate } from "react-router-dom";
 
-import { Text } from "../components";
-import { Colors } from "../helpers/utils";
+import { Text } from "@components";
+import { Colors } from "@helpers/utils";
 
 type LoginForm = {
   username: string;

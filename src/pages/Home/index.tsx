@@ -7,9 +7,10 @@ import {
   Hero,
   ServiceCourierItem,
   Text,
-} from "../../components";
-import { Colors, courierLogo, getCourierColor } from "../../helpers/utils";
-import { FilterResultCtx } from "../../helpers/lib";
+} from "@components";
+
+import { Colors, courierLogo, getCourierColor } from "@helpers/utils";
+import { FilterResultCtx } from "@helpers/lib";
 
 import {
   Content,
