@@ -4,12 +4,16 @@ import {
   CheckIcon,
   EllipsisHorizontalIcon,
   XMarkIcon,
+  SunIcon,
+  MoonIcon,
 } from "@heroicons/react/16/solid";
 
 export const listIcon = {
   check: CheckIcon,
   ellipsis: EllipsisHorizontalIcon,
   xMark: XMarkIcon,
+  sun: SunIcon,
+  moon: MoonIcon,
 };
 
 interface Props extends React.SVGAttributes<SVGElement> {
