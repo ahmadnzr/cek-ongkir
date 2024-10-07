@@ -2,13 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { Flex } from "antd";
 
-import { Colors, getCourierColor } from "../../helpers/utils";
-import { SaveFilterType } from "../../helpers/types";
-import { useFilterResultCtx } from "../../helpers/lib";
+import { Colors, getCourierColor } from "@helpers/utils";
+import { SaveFilterType } from "@helpers/types";
+import { useFilterResultCtx } from "@helpers/lib";
 
-import { Text } from "../Text";
-import { MenuButton, MenuItemType } from "../MenuButton";
-import { Icon } from "../Icon";
+import { Text, MenuButton, MenuItemType, Icon } from "@components";
 
 interface Props {
   history: SaveFilterType[];
@@ -16,23 +14,23 @@ interface Props {
 
 type MenuType = MenuItemType<"DELETE" | "APPLY">;
 
-const menu: MenuType[] = [
-  {
-    key: "APPLY",
-    label: "Terapkan",
-    icon: <Icon name="check" className="action-icon" />,
-    color: Colors.primary.blue,
-  },
-  {
-    key: "DELETE",
-    label: "Hapus",
-    icon: <Icon name="xMark" className="action-icon" />,
-    color: Colors.primary.red,
-  },
-];
-
 export const FilterHistory = ({ history }: Props) => {
   const { deleteHistory, applyHistory } = useFilterResultCtx();
+
+  const menu: MenuType[] = [
+    {
+      key: "APPLY",
+      label: "Terapkan",
+      icon: <Icon name="check" className="action-icon" />,
+      color: Colors.primary.blue,
+    },
+    {
+      key: "DELETE",
+      label: "Hapus",
+      icon: <Icon name="xMark" className="action-icon" />,
+      color: Colors.primary.red,
+    },
+  ];
 
   const handleClickAction = (action: MenuType, data: SaveFilterType) => {
     if (action.key === "DELETE") {

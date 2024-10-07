@@ -3,27 +3,17 @@ import { Button, Modal } from "antd";
 import styled, { css } from "styled-components";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
-import {
-  FilterInputs,
-  IndicatorColor,
-  SaveFilterType,
-} from "../../helpers/types";
+import { FilterInputs, IndicatorColor, SaveFilterType } from "@helpers/types";
 import {
   Colors,
   courierType,
   getCourierColor,
   getLocalStorage,
-} from "../../helpers/utils";
-import {
-  useFetchCost,
-  useFetchCity,
-  useFetchProvince,
-} from "../../helpers/hooks";
-import { FilterResultCtx } from "../../helpers/lib";
+} from "@helpers/utils";
+import { useFetchCost, useFetchCity, useFetchProvince } from "@helpers/hooks";
+import { FilterResultCtx } from "@helpers/lib";
 
-import { Text } from "../Text";
-import { InputSelect } from "../InputSelect";
-import { ControlledInputNumber } from "../ControlledInputNumber";
+import { Text, InputSelect, ControlledInputNumber } from "@components";
 
 export const FilterForm = () => {
   const { setResults, setHistory, defaultFilter } = useContext(FilterResultCtx);

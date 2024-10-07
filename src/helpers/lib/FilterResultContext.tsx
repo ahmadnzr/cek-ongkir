@@ -6,9 +6,9 @@ import React, {
   useContext,
 } from "react";
 
-import { Courier, SaveFilterType } from "../types";
-import { getLocalStorage, setLocalStorage } from "../utils";
-import { useFetchCost } from "../hooks";
+import { Courier, SaveFilterType } from "@helpers/types";
+import { getLocalStorage, setLocalStorage } from "@helpers/utils";
+import { useFetchCost } from "@helpers/hooks";
 
 interface FilterResultType {
   defaultFilter: SaveFilterType | null;

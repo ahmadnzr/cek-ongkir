@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-import { Colors } from "../../helpers/utils";
+import { Colors } from "@helpers/utils";
 
-import { Text } from "../Text";
+import { Text } from "@components";
 
 export const Footer = () => {
   return (

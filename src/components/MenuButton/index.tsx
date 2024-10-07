@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Popover } from "antd";
 import styled from "styled-components";
 
-import { Text } from "../Text";
-import { Colors } from "../../helpers/utils";
+import { Text } from "@components";
+import { Colors } from "@helpers/utils";
 
 export interface MenuItemType<T = number> {
   key: T;

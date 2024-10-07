@@ -1,8 +1,8 @@
 import { AxiosError } from "axios";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-import { getCities, getCost, getProvince } from "../api";
-import { APIRes, CostRequest, Courier } from "../types/";
+import { getCities, getCost, getProvince } from "@helpers/api";
+import { APIRes, CostRequest, Courier } from "@helpers/types";
 
 export const useFetchProvince = () => {
   return useQuery({
