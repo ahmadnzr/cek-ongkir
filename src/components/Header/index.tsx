@@ -1,16 +1,52 @@
 import styled from "styled-components";
 
-import { Text } from "@components";
+import { Icon, Text } from "@components";
+import { useState } from "react";
+import { Colors } from "@/helpers/utils";
 
 export const Header = () => {
+  const [dark, setDark] = useState(false);
+
   return (
     <HeaderStyled>
       <Text size="xxl" weight="bold" className="navbar_title">
         CheckOngkir
       </Text>
-      <GithubLink href="https://github.com/ahmadnzr/cek-ongkir" target="_blank">
-        <img src="/github-mark.png" alt="github-icon" className="github-icon" />
-      </GithubLink>
+      <Menu>
+        <ThemeToggle $dark={dark}>
+          <Circle $isDark={dark}>
+            <Icon name={dark ? "moon" : "sun"} className="light-icon" />
+          </Circle>
+          <ToggleButton>
+            <button onClick={() => setDark(false)}>
+              <Text
+                size="xs"
+                color={dark ? Colors.primary.light : Colors.primary.grayDark}
+              >
+                Light
+              </Text>
+            </button>
+            <button onClick={() => setDark(true)}>
+              <Text
+                size="xs"
+                color={dark ? Colors.primary.light : Colors.primary.grayDark}
+              >
+                Dark
+              </Text>
+            </button>
+          </ToggleButton>
+        </ThemeToggle>
+        <GithubLink
+          href="https://github.com/ahmadnzr/cek-ongkir"
+          target="_blank"
+        >
+          <img
+            src="/github-mark.png"
+            alt="github-icon"
+            className="github-icon"
+          />
+        </GithubLink>
+      </Menu>
     </HeaderStyled>
   );
 };
@@ -44,5 +80,60 @@ const GithubLink = styled.a`
 
   & .github-icon {
     width: 24px;
+  }
+`;
+
+const Menu = styled.div`
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+`;
+
+const ThemeToggle = styled.div<{ $dark: boolean }>`
+  position: relative;
+  height: 40px;
+  padding: 4px;
+  background: ${(props) => (props.$dark ? "#092E40" : "#fae9b1")};
+  border-radius: 50px;
+`;
+
+const ToggleButton = styled.div`
+  height: 100%;
+  display: flex;
+  gap: 6px;
+  align-items: stretch;
+
+  & button {
+    background: none;
+    border: none;
+    flex: 1;
+    cursor: pointer;
+    padding: 0 2px;
+  }
+`;
+
+const Circle = styled.button<{ $isDark: boolean }>`
+  --size: 32px;
+  position: absolute;
+  top: 50%;
+  left: ${(props) => (props.$isDark ? "38px" : "4px")};
+  background: ${(props) => (props.$isDark ? "#26AFEE" : "#f1c138")};
+  transition: 0.5s ease-out;
+  transform: translateY(-50%);
+  width: var(--size);
+  height: var(--size);
+  border-radius: var(--size);
+  border: none;
+  display: block;
+
+  & .light-icon {
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 20px;
   }
 `;
