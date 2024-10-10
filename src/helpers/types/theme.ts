@@ -15,3 +15,12 @@ export type FontWeightType = {
 };
 
 export type IndicatorColor = keyof typeof Colors.indicator;
+
+export type ColorType = {
+  bg: string;
+  ["neutral-10"]: string;
+};
+
+export type Theme = "light" | "dark";
+
+export type ThemeColor = ColorType;
