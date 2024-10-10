@@ -1,11 +1,13 @@
 import styled from "styled-components";
 
 import { Icon, Text } from "@components";
-import { useState } from "react";
+
 import { Colors } from "@/helpers/utils";
+import { useThemeContext } from "@/helpers/lib";
 
 export const Header = () => {
-  const [dark, setDark] = useState(false);
+  const { theme, setTheme } = useThemeContext();
+  const dark = theme === "dark";
 
   return (
     <HeaderStyled>
@@ -18,7 +20,7 @@ export const Header = () => {
             <Icon name={dark ? "moon" : "sun"} className="light-icon" />
           </Circle>
           <ToggleButton>
-            <button onClick={() => setDark(false)}>
+            <button onClick={() => setTheme("light")}>
               <Text
                 size="xs"
                 color={dark ? Colors.primary.light : Colors.primary.grayDark}
@@ -26,7 +28,7 @@ export const Header = () => {
                 Light
               </Text>
             </button>
-            <button onClick={() => setDark(true)}>
+            <button onClick={() => setTheme("dark")}>
               <Text
                 size="xs"
                 color={dark ? Colors.primary.light : Colors.primary.grayDark}
@@ -65,13 +67,14 @@ const HeaderStyled = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: white;
+  background: ${(props) => props.theme.themeColor.bg};
   box-shadow: 1px 1px 50px -10px rgba(0, 0, 0, 0.1);
 `;
 
 const GithubLink = styled.a`
   padding: 8px;
-  background-color: rgba(0, 0, 0, 0.09);
+  background-color: ${Colors.primary.light};
+
   border-radius: 50%;
   transition: 0.3s ease;
 
