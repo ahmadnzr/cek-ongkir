@@ -17,7 +17,7 @@ export const Text = ({
   type = "normal",
   size = "md",
   weight = "regular",
-  color = Colors.primary.grayDark,
+  color,
   tagColor = "green",
   ...others
 }: Props) => {
@@ -38,14 +38,14 @@ export const Text = ({
 const TextStyled = styled.p<{
   $size: FontSize;
   $weight: FontWeight;
-  $color: string;
+  $color?: string;
   $type: "normal" | "tag";
   $tagColor: IndicatorColor;
 }>`
   ${(props) => css`
     font-size: ${props.theme.fontSize[props.$size]};
     font-weight: ${props.theme.fontWeight[props.$weight]};
-    color: ${props.$color};
+    color: ${props.$color || props.theme.themeColor["neutral-10"]};
   `}
   line-height: 100%;
   ${(props) =>
