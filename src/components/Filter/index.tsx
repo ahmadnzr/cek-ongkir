@@ -38,4 +38,5 @@ const Container = styled.div`
   padding: 0 12px 10px;
   border-radius: 10px;
   box-shadow: 1px 1px 50px -10px rgba(0, 0, 0, 0.1);
+  background: ${(props) => props.theme.themeColor.bg};
 `;

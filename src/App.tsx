@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
+import { ConfigProvider, theme as antdTheme } from "antd";
 
 import { FilterResultContainer, useTheme, useThemeContext } from "@helpers/lib";
 
@@ -19,9 +20,18 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <FilterResultContainer>
-        <RouterProvider router={router} />;
-      </FilterResultContainer>
+      <ConfigProvider
+        theme={{
+          algorithm:
+            themeCtx === "light"
+              ? antdTheme.defaultAlgorithm
+              : antdTheme.darkAlgorithm,
+        }}
+      >
+        <FilterResultContainer>
+          <RouterProvider router={router} />;
+        </FilterResultContainer>
+      </ConfigProvider>
     </ThemeProvider>
   );
 }

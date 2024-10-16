@@ -20,6 +20,7 @@ export const ThemeContextProvider = ({
 
   const handleSetTheme = (theme: Theme) => {
     setTheme(theme);
+    document.documentElement.style.setProperty("color-scheme", theme);
   };
 
   return (

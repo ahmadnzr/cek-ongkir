@@ -22,6 +22,7 @@ export const ResultContainer = styled.div`
   border-radius: 10px;
   padding: 20px 10px;
   box-shadow: 1px 1px 50px -10px rgba(0, 0, 0, 0.1);
+  background: ${(props) => props.theme.themeColor.bg};
 `;
 
 export const DetailCourier = styled.div``;
