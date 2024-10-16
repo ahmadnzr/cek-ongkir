@@ -7,6 +7,7 @@ import { useThemeContext } from "@/helpers/lib";
 
 export const Header = () => {
   const { theme, setTheme } = useThemeContext();
+
   const dark = theme === "dark";
 
   return (
