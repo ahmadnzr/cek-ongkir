@@ -1,4 +1,4 @@
-type LocalStorageKey = "SAVE_FILTER";
+type LocalStorageKey = "SAVE_FILTER" | "THEME";
 
 export const setLocalStorage = <T>(key: LocalStorageKey, value: T) => {
   try {

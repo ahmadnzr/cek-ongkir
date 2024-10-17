@@ -1,5 +1,7 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+
 import { Theme } from "../types";
+import { getLocalStorage, setLocalStorage } from "../utils";
 
 type ThemeContextType = {
   theme: Theme;
@@ -16,12 +18,17 @@ export const ThemeContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [theme, setTheme] = useState<Theme>("light");
+  const savedTheme = getLocalStorage<Theme>("THEME") || "light";
+  const [theme, setTheme] = useState<Theme>(savedTheme);
 
   const handleSetTheme = (theme: Theme) => {
     setTheme(theme);
-    document.documentElement.style.setProperty("color-scheme", theme);
+    setLocalStorage("THEME", theme);
   };
+
+  useEffect(() => {
+    document.documentElement.style.setProperty("color-scheme", theme);
+  }, [theme]);
 
   return (
     <ThemeContext.Provider
