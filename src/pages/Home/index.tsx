@@ -1,13 +1,6 @@
 import { useContext } from "react";
 
-import {
-  Filter,
-  Footer,
-  Header,
-  Hero,
-  ServiceCourierItem,
-  Text,
-} from "@components";
+import { Footer, Header, Hero, Text } from "@components";
 
 import { Colors, courierLogo, getCourierColor } from "@helpers/utils";
 import { FilterResultCtx } from "@helpers/lib";
@@ -22,7 +15,8 @@ import {
   MainStyled,
   NotFoundContainer,
   ResultContainer,
-} from "./styled";
+} from "./_styled";
+import { Filter, ServiceCourierItem } from "./_components";
 
 function HomePage() {
   const { results } = useContext(FilterResultCtx);

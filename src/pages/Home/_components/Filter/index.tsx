@@ -1,15 +1,10 @@
 import { Tabs } from "antd";
 import styled from "styled-components";
 
-import { useFilterResultCtx } from "../../helpers/lib";
+import { useFilterResultCtx } from "@helpers/lib";
 
 import { FilterHistory } from "./FilterHistory";
 import { FilterForm } from "./FilterForm";
-
-/*TODO:
- * Create Icon component
- * for concistency
- * */
 
 export const Filter = () => {
   const { history } = useFilterResultCtx();
