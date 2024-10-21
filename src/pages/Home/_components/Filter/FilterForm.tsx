@@ -17,6 +17,7 @@ import { Text, InputSelect, ControlledInputNumber } from "@components";
 
 export const FilterForm = () => {
   const { setResults, setHistory, defaultFilter } = useContext(FilterResultCtx);
+
   const {
     handleSubmit,
     control,
