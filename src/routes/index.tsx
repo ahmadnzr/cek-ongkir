@@ -1,7 +1,7 @@
 import { useContext } from "react";
+import { createFileRoute } from "@tanstack/react-router";
 
 import { Footer, Header, Hero, Text } from "@components";
-
 import { Colors, courierLogo, getCourierColor } from "@helpers/utils";
 import { FilterResultCtx } from "@helpers/lib";
 
@@ -15,10 +15,14 @@ import {
   MainStyled,
   NotFoundContainer,
   ResultContainer,
-} from "./_styled";
-import { Filter, ServiceCourierItem } from "./_components";
+} from "./-commons/styles";
+import { Filter, ServiceCourierItem } from "./-commons/components";
 
-function HomePage() {
+export const Route = createFileRoute("/")({
+  component: Index,
+});
+
+function Index() {
   const { results } = useContext(FilterResultCtx);
 
   return (
@@ -71,5 +75,3 @@ function HomePage() {
     </MainStyled>
   );
 }
-
-export default HomePage;
