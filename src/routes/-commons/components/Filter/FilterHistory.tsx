@@ -4,7 +4,6 @@ import styled from "styled-components";
 
 import { Colors, getCourierColor } from "@helpers/utils";
 import { SaveFilterType } from "@helpers/types";
-import { useFilterResultCtx } from "@helpers/lib";
 
 import { Text, MenuButton, MenuItemType, Icon } from "@components";
 
@@ -15,8 +14,6 @@ interface Props {
 type MenuType = MenuItemType<"DELETE" | "APPLY">;
 
 export const FilterHistory = ({ history }: Props) => {
-  const { deleteHistory, applyHistory } = useFilterResultCtx();
-
   const menu: MenuType[] = useMemo(
     () => [
       {
@@ -38,11 +35,12 @@ export const FilterHistory = ({ history }: Props) => {
   const handleClickAction = useCallback(
     (action: MenuType, data: SaveFilterType) => {
       if (action.key === "DELETE") {
-        deleteHistory(data);
+        //deleteHistory(data);
+        console.log(data);
         return;
       }
 
-      applyHistory(data);
+      // applyHistory(data);
     },
     [],
   );

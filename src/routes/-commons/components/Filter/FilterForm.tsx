@@ -1,41 +1,26 @@
-import { useContext } from "react";
-import { Button, Modal } from "antd";
+import { Button } from "antd";
 import styled, { css } from "styled-components";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
-import { FilterInputs, IndicatorColor, SaveFilterType } from "@helpers/types";
-import {
-  Colors,
-  courierType,
-  getCourierColor,
-  getLocalStorage,
-} from "@helpers/utils";
-import { useFetchCost, useFetchCity, useFetchProvince } from "@helpers/hooks";
-import { FilterResultCtx } from "@helpers/lib";
-
 import { Text, InputSelect, ControlledInputNumber } from "@components";
+import { FilterInputs, IndicatorColor } from "@helpers/types";
+import { Colors, courierType, getCourierColor } from "@helpers/utils";
 
-export const FilterForm = () => {
-  const { setResults, setHistory, defaultFilter } = useContext(FilterResultCtx);
+import { useFetchCity, useFetchProvince } from "../../hooks";
 
+import { FilterProps } from ".";
+
+export const FilterForm = ({
+  handleOnSubmit,
+  loading,
+}: FilterProps["formProps"]) => {
   const {
     handleSubmit,
     control,
     reset,
     formState: { isValid },
-    getValues,
     watch,
-    setValue,
-  } = useForm<FilterInputs>({
-    values: {
-      fromProvince: defaultFilter?.fromProvince?.province_id,
-      toProvince: defaultFilter?.toProvince?.province_id,
-      fromCity: defaultFilter?.fromCity?.city_id,
-      toCity: defaultFilter?.toCity?.city_id,
-      weight: defaultFilter?.weight,
-      courier: defaultFilter?.courier,
-    },
-  });
+  } = useForm<FilterInputs>({});
 
   const fromProvince = watch("fromProvince");
   const toProvince = watch("toProvince");
@@ -43,82 +28,66 @@ export const FilterForm = () => {
   const { data: province } = useFetchProvince();
   const { data: fromCities } = useFetchCity(fromProvince);
   const { data: toCities } = useFetchCity(toProvince);
-  const { mutate, isLoading } = useFetchCost();
 
   const onSubmit: SubmitHandler<FilterInputs> = (data) => {
-    const { fromCity, toCity, weight, courier } = data;
-    if (!fromCity || !toCity || !weight || !courier) return;
-
-    mutate(
-      {
-        origin: fromCity,
-        destination: toCity,
-        weight: (parseInt(weight) * 1000).toString(), // in gram
-        courier,
-      },
-      {
-        onSuccess: (data) => {
-          setResults(data.rajaongkir.results);
-        },
-      },
-    );
+    handleOnSubmit(data);
   };
 
-  const handleSave = () => {
-    try {
-      const { fromProvince, toProvince, fromCity, toCity, weight, courier } =
-        getValues();
-      if (!weight || !courier) return;
+  // const handleSave = () => {
+  //  try {
+  //    const { fromProvince, toProvince, fromCity, toCity, weight, courier } =
+  //      getValues();
+  //    if (!weight || !courier) return;
+  //
+  //    const savedFilter =
+  //      getLocalStorage<SaveFilterType[]>("SAVE_FILTER") || [];
+  //
+  //    const newId = `${fromCity}/${toCity}/${weight}/${courier}`;
+  //    const invalidID = savedFilter.some((item) => item.id === newId);
+  //
+  //    if (invalidID) {
+  //      throw new Error(
+  //        "Filter sudah ada pada history. Silakan buat filter baru untuk menyimpan filter.",
+  //      );
+  //    }
+  //
+  //    const save: SaveFilterType = {
+  //      id: `${fromCity}/${toCity}/${weight}/${courier}`,
+  //      fromProvince: province?.find(
+  //        (item) => item.province_id === fromProvince,
+  //      ),
+  //      toProvince: province?.find((item) => item.province_id === toProvince),
+  //      fromCity: fromCities?.find((item) => item.city_id === fromCity),
+  //      toCity: toCities?.find((item) => item.city_id === toCity),
+  //      weight: weight,
+  //      courier: courier,
+  //    };
+  //
+  //    setHistory(save);
+  //
+  //    Modal.success({
+  //      title: "Filter Berhasil Disimpan",
+  //      content: "Silakan melihat filter yang tersimpan pada tab histori.",
+  //    });
+  //  } catch (err: unknown) {
+  //    const error =
+  //      err instanceof Error ? err.message : "Unknown error occurred";
+  //
+  //    Modal.error({
+  //      title: "Filter Gagal Disimpan",
+  //      content: error,
+  //    });
+  //  }
+  //};
 
-      const savedFilter =
-        getLocalStorage<SaveFilterType[]>("SAVE_FILTER") || [];
-
-      const newId = `${fromCity}/${toCity}/${weight}/${courier}`;
-      const invalidID = savedFilter.some((item) => item.id === newId);
-
-      if (invalidID) {
-        throw new Error(
-          "Filter sudah ada pada history. Silakan buat filter baru untuk menyimpan filter.",
-        );
-      }
-
-      const save: SaveFilterType = {
-        id: `${fromCity}/${toCity}/${weight}/${courier}`,
-        fromProvince: province?.find(
-          (item) => item.province_id === fromProvince,
-        ),
-        toProvince: province?.find((item) => item.province_id === toProvince),
-        fromCity: fromCities?.find((item) => item.city_id === fromCity),
-        toCity: toCities?.find((item) => item.city_id === toCity),
-        weight: weight,
-        courier: courier,
-      };
-
-      setHistory(save);
-
-      Modal.success({
-        title: "Filter Berhasil Disimpan",
-        content: "Silakan melihat filter yang tersimpan pada tab histori.",
-      });
-    } catch (err: unknown) {
-      const error =
-        err instanceof Error ? err.message : "Unknown error occurred";
-
-      Modal.error({
-        title: "Filter Gagal Disimpan",
-        content: error,
-      });
-    }
-  };
-
-  const handleManualReset = () => {
-    setValue("courier", undefined);
-    setValue("weight", undefined);
-    setValue("fromProvince", undefined);
-    setValue("toProvince", undefined);
-    setValue("toCity", undefined);
-    setValue("fromCity", undefined);
-  };
+  // const handleManualReset = () => {
+  //  setValue("courier", null);
+  //  setValue("weight", undefined);
+  //  setValue("fromProvince", undefined);
+  //  setValue("toProvince", undefined);
+  //  setValue("toCity", undefined);
+  //  setValue("fromCity", undefined);
+  // };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -218,7 +187,7 @@ export const FilterForm = () => {
         <FilterButton>
           <Button
             className="primary-btn"
-            loading={isLoading}
+            loading={loading}
             type="primary"
             htmlType="submit"
             disabled={!isValid}
@@ -231,13 +200,12 @@ export const FilterForm = () => {
             htmlType="reset"
             onClick={() => {
               reset();
-              setResults([]);
-              handleManualReset();
             }}
           >
             Reset
           </Button>
-          <Button onClick={handleSave} disabled={!isValid}>
+
+          <Button onClick={() => {}} disabled={!isValid}>
             Simpan Filter
           </Button>
         </FilterButton>

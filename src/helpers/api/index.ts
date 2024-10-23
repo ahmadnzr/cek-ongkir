@@ -2,8 +2,7 @@ import axios, { AxiosInstance } from "axios";
 import { APIRes, City, CostRequest, Courier, Province } from "@helpers/types";
 
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL:
-    import.meta.env.VITE_BASE_URL || "https://rajaongkir-gate.vercel.app",
+  baseURL: "https://rajaongkir-gate.vercel.app",
 });
 
 export const getProvince = async () => {

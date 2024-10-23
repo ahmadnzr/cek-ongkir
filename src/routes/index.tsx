@@ -1,9 +1,7 @@
-import { useContext } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { Footer, Header, Hero, Text } from "@components";
 import { Colors, courierLogo, getCourierColor } from "@helpers/utils";
-import { FilterResultCtx } from "@helpers/lib";
 
 import {
   Content,
@@ -17,21 +15,34 @@ import {
   ResultContainer,
 } from "./-commons/styles";
 import { Filter, ServiceCourierItem } from "./-commons/components";
+import { FilterInputs } from "@/helpers/types";
+import { useFetchCost } from "./-commons/hooks";
 
 export const Route = createFileRoute("/")({
   component: Index,
 });
 
 function Index() {
-  const { results } = useContext(FilterResultCtx);
+  const { mutate, isLoading, data } = useFetchCost();
+
+  const handleCheckCost = (values: FilterInputs) => {
+    mutate({
+      origin: values.fromCity,
+      destination: values.toCity,
+      weight: (parseInt(values.weight) * 1000).toString(), // in gram
+      courier: values.courier,
+    });
+  };
 
   return (
     <MainStyled>
       <Header />
       <Content>
         <Hero />
-        <Filter />
-        {results.map((item) => (
+        <Filter
+          formProps={{ handleOnSubmit: handleCheckCost, loading: isLoading }}
+        />
+        {data?.rajaongkir.results.map((item) => (
           <ResultContainer key={item.code}>
             <DetailCourier>
               <DetailHeader>

@@ -53,12 +53,12 @@ export type CourierTypeButton = {
 };
 
 export type FilterInputs = {
-  fromProvince?: string;
-  fromCity?: string;
-  toProvince?: string;
-  toCity?: string;
-  weight?: string;
-  courier?: CourierType;
+  fromProvince: string;
+  fromCity: string;
+  toProvince: string;
+  toCity: string;
+  weight: string;
+  courier: CourierType;
 };
 
 export interface SaveFilterType {

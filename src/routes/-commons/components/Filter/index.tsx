@@ -1,14 +1,18 @@
 import { Tabs } from "antd";
 import styled from "styled-components";
 
-import { useFilterResultCtx } from "@helpers/lib";
-
 import { FilterHistory } from "./FilterHistory";
 import { FilterForm } from "./FilterForm";
+import { FilterInputs } from "@/helpers/types";
 
-export const Filter = () => {
-  const { history } = useFilterResultCtx();
+export interface FilterProps {
+  formProps: {
+    handleOnSubmit: (values: FilterInputs) => void;
+    loading: boolean;
+  };
+}
 
+export const Filter = ({ formProps }: FilterProps) => {
   return (
     <Container>
       <Tabs
@@ -16,12 +20,17 @@ export const Filter = () => {
           {
             key: "1",
             label: "Filter",
-            children: <FilterForm />,
+            children: (
+              <FilterForm
+                handleOnSubmit={formProps.handleOnSubmit}
+                loading={formProps.loading}
+              />
+            ),
           },
           {
             key: "2",
             label: "Histori",
-            children: <FilterHistory history={history} />,
+            children: <FilterHistory history={[]} />,
           },
         ]}
       />
