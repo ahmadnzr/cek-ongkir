@@ -61,7 +61,7 @@ export type FilterInputs = {
   courier: CourierType;
 };
 
-export interface SaveFilterType {
+export interface THistoryResponse {
   id: React.Key;
   fromProvince?: Province;
   fromCity?: City;

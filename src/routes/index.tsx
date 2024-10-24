@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { Footer, Header, Hero, Text } from "@components";
 import { Colors, courierLogo, getCourierColor } from "@helpers/utils";
-import { FilterInputs } from "@/helpers/types";
+import { FilterInputs, THistoryResponse } from "@/helpers/types";
 
 import {
   Content,
@@ -17,6 +17,8 @@ import {
 } from "./-commons/styles";
 import { Filter, ServiceCourierItem } from "./-commons/components";
 import { useFetchCost } from "./-commons/hooks";
+import { useFetchHistory } from "./-commons/hooks/useFetchHistory";
+import { useCreateHistoryMutation } from "./-commons/hooks/create-history-mutation";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -28,7 +30,11 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const { tab } = Route.useSearch();
+
   const { mutate, isLoading, data } = useFetchCost();
+  const historyQuery = useFetchHistory({ enabled: tab === "2" });
+  const historyMutation = useCreateHistoryMutation();
 
   const handleCheckCost = (values: FilterInputs) => {
     mutate({
@@ -39,13 +45,24 @@ function Index() {
     });
   };
 
+  const handleSaveHistory = (values: THistoryResponse) => {
+    historyMutation.mutate(values);
+  };
+
   return (
     <MainStyled>
       <Header />
       <Content>
         <Hero />
         <Filter
-          formProps={{ handleOnSubmit: handleCheckCost, loading: isLoading }}
+          historyProps={{
+            history: historyQuery.data || [],
+          }}
+          formProps={{
+            handleOnSubmit: handleCheckCost,
+            handleSaveHistory,
+            loading: isLoading,
+          }}
         />
         {data?.rajaongkir.results.map((item) => (
           <ResultContainer key={item.code}>

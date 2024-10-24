@@ -3,18 +3,22 @@ import { useNavigate } from "@tanstack/react-router";
 import styled from "styled-components";
 
 import { Route } from "@/routes";
-import { FilterInputs } from "@/helpers/types";
+import { FilterInputs, THistoryResponse } from "@/helpers/types";
 import { FilterHistory } from "./FilterHistory";
 import { FilterForm } from "./FilterForm";
 
 export interface FilterProps {
   formProps: {
     handleOnSubmit: (values: FilterInputs) => void;
+    handleSaveHistory: (values: THistoryResponse) => void;
     loading: boolean;
+  };
+  historyProps: {
+    history: THistoryResponse[];
   };
 }
 
-export const Filter = ({ formProps }: FilterProps) => {
+export const Filter = ({ formProps, historyProps }: FilterProps) => {
   const navigate = useNavigate({ from: Route.fullPath });
   const { tab } = Route.useSearch();
 
@@ -36,6 +40,7 @@ export const Filter = ({ formProps }: FilterProps) => {
             children: (
               <FilterForm
                 handleOnSubmit={formProps.handleOnSubmit}
+                handleSaveHistory={formProps.handleSaveHistory}
                 loading={formProps.loading}
               />
             ),
@@ -43,7 +48,7 @@ export const Filter = ({ formProps }: FilterProps) => {
           {
             key: "2",
             label: "Histori",
-            children: <FilterHistory history={[]} />,
+            children: <FilterHistory history={historyProps.history} />,
           },
         ]}
       />
