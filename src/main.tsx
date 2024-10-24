@@ -6,7 +6,6 @@ import {
   ThemeContextProvider,
   QueryClientProvider,
   queryClient,
-  FilterResultContainer,
 } from "@helpers/lib";
 
 import { routeTree } from "./routeTree.gen";
@@ -23,9 +22,7 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider>
       <ThemeContextProvider>
-        <FilterResultContainer>
-          <RouterProvider router={router} />
-        </FilterResultContainer>
+        <RouterProvider router={router} />
       </ThemeContextProvider>
     </QueryClientProvider>
   </StrictMode>,

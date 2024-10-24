@@ -1,48 +1,42 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
 import { Flex } from "antd";
 import styled from "styled-components";
 
 import { Colors, getCourierColor } from "@helpers/utils";
-import { SaveFilterType } from "@helpers/types";
-import { useFilterResultCtx } from "@helpers/lib";
+import { THistoryResponse } from "@helpers/types";
 
 import { Text, MenuButton, MenuItemType, Icon } from "@components";
-
-interface Props {
-  history: SaveFilterType[];
-}
+import { FilterProps } from ".";
 
 type MenuType = MenuItemType<"DELETE" | "APPLY">;
 
-export const FilterHistory = ({ history }: Props) => {
-  const { deleteHistory, applyHistory } = useFilterResultCtx();
+const menu: MenuType[] = [
+  {
+    key: "APPLY",
+    label: "Terapkan",
+    icon: <Icon name="check" className="action-icon" />,
+    color: Colors.primary.blue,
+  },
+  {
+    key: "DELETE",
+    label: "Hapus",
+    icon: <Icon name="xMark" className="action-icon" />,
+    color: Colors.primary.red,
+  },
+];
 
-  const menu: MenuType[] = useMemo(
-    () => [
-      {
-        key: "APPLY",
-        label: "Terapkan",
-        icon: <Icon name="check" className="action-icon" />,
-        color: Colors.primary.blue,
-      },
-      {
-        key: "DELETE",
-        label: "Hapus",
-        icon: <Icon name="xMark" className="action-icon" />,
-        color: Colors.primary.red,
-      },
-    ],
-    [],
-  );
-
+export const FilterHistory = ({
+  history,
+  handleDelete,
+  handleApply,
+}: FilterProps["historyProps"]) => {
   const handleClickAction = useCallback(
-    (action: MenuType, data: SaveFilterType) => {
+    (action: MenuType, data: THistoryResponse) => {
       if (action.key === "DELETE") {
-        deleteHistory(data);
+        handleDelete(data);
         return;
       }
-
-      applyHistory(data);
+      handleApply(data);
     },
     [],
   );
