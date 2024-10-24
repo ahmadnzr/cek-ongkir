@@ -62,7 +62,7 @@ export type FilterInputs = {
 };
 
 export interface THistoryResponse {
-  id: React.Key;
+  id: string;
   fromProvince?: Province;
   fromCity?: City;
   toProvince?: Province;

@@ -66,3 +66,16 @@ export const getHistory = (): Promise<THistoryResponse[]> => {
 
   return Promise.resolve(histories);
 };
+
+export const deleteHistory = (params: {
+  id: string;
+}): Promise<TCreateResponse> => {
+  const histories = getLocalStorage<THistoryResponse[]>("SAVE_FILTER") || [];
+  const filter = histories.filter((item) => item.id !== params.id);
+  setLocalStorage<THistoryResponse[]>("SAVE_FILTER", filter);
+
+  return Promise.resolve({
+    status: 200,
+    message: `History: ${params.id} deleted`,
+  });
+};

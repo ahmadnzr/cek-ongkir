@@ -15,6 +15,8 @@ export interface FilterProps {
   };
   historyProps: {
     history: THistoryResponse[];
+    handleApply: (values: THistoryResponse) => void;
+    handleDelete: (values: THistoryResponse) => void;
   };
 }
 
@@ -48,7 +50,13 @@ export const Filter = ({ formProps, historyProps }: FilterProps) => {
           {
             key: "2",
             label: "Histori",
-            children: <FilterHistory history={historyProps.history} />,
+            children: (
+              <FilterHistory
+                history={historyProps.history}
+                handleDelete={historyProps.handleDelete}
+                handleApply={historyProps.handleApply}
+              />
+            ),
           },
         ]}
       />

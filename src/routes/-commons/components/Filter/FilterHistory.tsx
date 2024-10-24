@@ -25,15 +25,18 @@ const menu: MenuType[] = [
   },
 ];
 
-export const FilterHistory = ({ history }: FilterProps["historyProps"]) => {
+export const FilterHistory = ({
+  history,
+  handleDelete,
+  handleApply,
+}: FilterProps["historyProps"]) => {
   const handleClickAction = useCallback(
     (action: MenuType, data: THistoryResponse) => {
       if (action.key === "DELETE") {
-        //deleteHistory(data);
-        console.log(data);
+        handleDelete(data);
         return;
       }
-      // applyHistory(data);
+      handleApply(data);
     },
     [],
   );
