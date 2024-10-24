@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { Footer, Header, Hero, Text } from "@components";
 import { Colors, courierLogo, getCourierColor } from "@helpers/utils";
+import { FilterInputs } from "@/helpers/types";
 
 import {
   Content,
@@ -15,11 +16,15 @@ import {
   ResultContainer,
 } from "./-commons/styles";
 import { Filter, ServiceCourierItem } from "./-commons/components";
-import { FilterInputs } from "@/helpers/types";
 import { useFetchCost } from "./-commons/hooks";
 
 export const Route = createFileRoute("/")({
   component: Index,
+  validateSearch: (search: Record<string, unknown>) => {
+    return {
+      tab: search?.tab as string,
+    };
+  },
 });
 
 function Index() {

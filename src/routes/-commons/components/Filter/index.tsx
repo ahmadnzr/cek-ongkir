@@ -1,9 +1,11 @@
 import { Tabs } from "antd";
+import { useNavigate } from "@tanstack/react-router";
 import styled from "styled-components";
 
+import { Route } from "@/routes";
+import { FilterInputs } from "@/helpers/types";
 import { FilterHistory } from "./FilterHistory";
 import { FilterForm } from "./FilterForm";
-import { FilterInputs } from "@/helpers/types";
 
 export interface FilterProps {
   formProps: {
@@ -13,9 +15,20 @@ export interface FilterProps {
 }
 
 export const Filter = ({ formProps }: FilterProps) => {
+  const navigate = useNavigate({ from: Route.fullPath });
+  const { tab } = Route.useSearch();
+
   return (
     <Container>
       <Tabs
+        onChange={(val) =>
+          navigate({
+            search: () => ({
+              tab: val,
+            }),
+          })
+        }
+        activeKey={tab}
         items={[
           {
             key: "1",
