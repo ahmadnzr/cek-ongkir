@@ -38,7 +38,7 @@ export const FilterHistory = ({
       }
       handleApply(data);
     },
-    [],
+    [handleApply, handleDelete],
   );
 
   return (

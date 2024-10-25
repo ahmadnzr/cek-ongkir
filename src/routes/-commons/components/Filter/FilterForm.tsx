@@ -11,9 +11,11 @@ import { useFetchCity, useFetchProvince } from "../../hooks";
 import { FilterProps } from ".";
 
 export const FilterForm = ({
+  defaultValues,
   handleOnSubmit,
   loading,
   handleSaveHistory,
+  onReset,
 }: FilterProps["formProps"]) => {
   const {
     handleSubmit,
@@ -22,7 +24,9 @@ export const FilterForm = ({
     formState: { isValid },
     watch,
     getValues,
-  } = useForm<FilterInputs>({});
+  } = useForm<FilterInputs>({
+    values: defaultValues,
+  });
 
   const fromProvince = watch("fromProvince");
   const toProvince = watch("toProvince");
@@ -163,6 +167,7 @@ export const FilterForm = ({
             htmlType="reset"
             onClick={() => {
               reset();
+              if (typeof onReset === "function") onReset();
             }}
           >
             Reset

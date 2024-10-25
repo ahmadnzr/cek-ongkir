@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 
 import { Footer, Header, Hero, Text } from "@components";
 import { Colors, courierLogo, getCourierColor } from "@helpers/utils";
@@ -21,20 +21,31 @@ import { useFetchHistory } from "./-commons/hooks/useFetchHistory";
 import { useCreateHistoryMutation } from "./-commons/hooks/create-history-mutation";
 import { useDeleteHistoryMutation } from "./-commons/hooks/delete-history-mutation";
 
+export type THistorySearch = FilterInputs & {
+  tab: string;
+};
+
 export const Route = createFileRoute("/")({
   component: Index,
-  validateSearch: (search: Record<string, unknown>) => {
+  validateSearch: (search: THistorySearch): THistorySearch => {
     return {
-      tab: search?.tab as string,
+      tab: search.tab,
+      fromProvince: search?.fromProvince,
+      fromCity: search.fromCity,
+      toProvince: search.toProvince,
+      toCity: search.toCity,
+      courier: search.courier,
+      weight: search.weight,
     };
   },
 });
 
 function Index() {
-  const { tab } = Route.useSearch();
+  const search = Route.useSearch();
+  const navigate = useNavigate({ from: Route.fullPath });
 
   const costMutation = useFetchCost();
-  const historyQuery = useFetchHistory({ enabled: tab === "2" });
+  const historyQuery = useFetchHistory({ enabled: search.tab === "2" });
   const historyMutation = useCreateHistoryMutation();
   const deleteHistoryMutation = useDeleteHistoryMutation();
 
@@ -66,6 +77,12 @@ function Index() {
     });
   };
 
+  const clearHistory = () => {
+    navigate({
+      search: () => ({}),
+    });
+  };
+
   return (
     <MainStyled>
       <Header />
@@ -78,50 +95,53 @@ function Index() {
             handleApply: handleApplyHistory,
           }}
           formProps={{
+            onReset: clearHistory,
+            defaultValues: search,
             handleOnSubmit: handleCheckCost,
             handleSaveHistory,
             loading: costMutation.isLoading,
           }}
         />
-        {costMutation.data?.rajaongkir.results.map((item) => (
-          <ResultContainer key={item.code}>
-            <DetailCourier>
-              <DetailHeader>
-                {item.code ? (
-                  <CourierLogo $bg={courierLogo[item.code]}></CourierLogo>
-                ) : null}
-                <CourierName>
-                  <Text
-                    type="tag"
-                    size="sm"
-                    tagColor={getCourierColor(item.code)}
-                  >
-                    {item.code}
-                  </Text>
-                  <Text weight="bold">{item.name}</Text>
-                </CourierName>
-              </DetailHeader>
+        {search.courier /* as if the results were also reseted, lol for the condition :) */ &&
+          costMutation.data?.rajaongkir.results.map((item) => (
+            <ResultContainer key={item.code}>
+              <DetailCourier>
+                <DetailHeader>
+                  {item.code ? (
+                    <CourierLogo $bg={courierLogo[item.code]}></CourierLogo>
+                  ) : null}
+                  <CourierName>
+                    <Text
+                      type="tag"
+                      size="sm"
+                      tagColor={getCourierColor(item.code)}
+                    >
+                      {item.code}
+                    </Text>
+                    <Text weight="bold">{item.name}</Text>
+                  </CourierName>
+                </DetailHeader>
 
-              {item.costs.length ? (
-                <CourierService>
-                  {item.costs.map((cost) => (
-                    <ServiceCourierItem
-                      key={cost.service}
-                      cost={cost}
-                      code={item.code}
-                    />
-                  ))}
-                </CourierService>
-              ) : (
-                <NotFoundContainer>
-                  <Text size="lg" color={Colors.primary.grayLight}>
-                    Layanan Pengiriman Tidak Tersedia
-                  </Text>
-                </NotFoundContainer>
-              )}
-            </DetailCourier>
-          </ResultContainer>
-        ))}
+                {item.costs.length ? (
+                  <CourierService>
+                    {item.costs.map((cost) => (
+                      <ServiceCourierItem
+                        key={cost.service}
+                        cost={cost}
+                        code={item.code}
+                      />
+                    ))}
+                  </CourierService>
+                ) : (
+                  <NotFoundContainer>
+                    <Text size="lg" color={Colors.primary.grayLight}>
+                      Layanan Pengiriman Tidak Tersedia
+                    </Text>
+                  </NotFoundContainer>
+                )}
+              </DetailCourier>
+            </ResultContainer>
+          ))}
       </Content>
       <Footer />
     </MainStyled>

@@ -1,8 +1,26 @@
 export type CourierType = "jne" | "pos" | "tiki";
 
+type TLocationDetails = {
+  city_id: string;
+  province_id: string;
+  province: string;
+  type: string;
+  city_name: string;
+  postal_code: string;
+};
+
+type QueryDetails = {
+  origin: string;
+  destination: string;
+  weight: number;
+  courier: CourierType;
+};
+
 export interface APIRes<T> {
   rajaongkir: {
-    query: object;
+    origin_details: TLocationDetails;
+    destination_details: TLocationDetails;
+    query: QueryDetails;
     status: object;
     results: T;
   };
