@@ -4,11 +4,14 @@ import styled from "styled-components";
 
 import { Route } from "@/routes";
 import { FilterInputs, THistoryResponse } from "@/helpers/types";
+
 import { FilterHistory } from "./FilterHistory";
 import { FilterForm } from "./FilterForm";
 
 export interface FilterProps {
   formProps: {
+    defaultValues?: FilterInputs;
+    onReset?: () => void;
     handleOnSubmit: (values: FilterInputs) => void;
     handleSaveHistory: (values: THistoryResponse) => void;
     loading: boolean;
@@ -41,6 +44,8 @@ export const Filter = ({ formProps, historyProps }: FilterProps) => {
             label: "Filter",
             children: (
               <FilterForm
+                onReset={formProps.onReset}
+                defaultValues={formProps.defaultValues}
                 handleOnSubmit={formProps.handleOnSubmit}
                 handleSaveHistory={formProps.handleSaveHistory}
                 loading={formProps.loading}

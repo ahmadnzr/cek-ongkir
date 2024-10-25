@@ -28,7 +28,7 @@ export const ControlledInputNumber = <
         <InputNumber
           addonAfter="Kg"
           style={{ width: "100px" }}
-          value={value}
+          value={value || undefined}
           min={1}
           max={100}
           onChange={onChange}

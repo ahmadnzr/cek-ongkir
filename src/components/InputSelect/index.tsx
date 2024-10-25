@@ -27,11 +27,11 @@ export const InputSelect = <T extends FieldValues, Y extends Path<T>>({
       render={({ field: { onChange, value } }) => (
         <Select
           allowClear
-          value={value}
+          value={value || undefined}
           options={options}
           placeholder="Pilih"
           onChange={(val) => {
-            if (typeof customOnChange === "function") {
+            if (typeof customOnChange === "function" && val) {
               customOnChange(val);
             }
             onChange(val);
