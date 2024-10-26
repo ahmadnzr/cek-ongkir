@@ -4,8 +4,11 @@ import styled from "styled-components";
 
 import { Colors, getCourierColor } from "@helpers/utils";
 import { THistoryResponse } from "@helpers/types";
+import { Text } from "@components/text";
+import { MenuButton } from "@components/menu-button";
+import { MenuItemType } from "@components/menu-button";
+import { Icon } from "@components/icon";
 
-import { Text, MenuButton, MenuItemType, Icon } from "@components";
 import { FilterProps } from ".";
 
 type MenuType = MenuItemType<"DELETE" | "APPLY">;

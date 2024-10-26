@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { Colors } from "@helpers/utils";
 
-import { Text } from "@components";
+import { Text } from "../text";
 
 export const Footer = () => {
   return (

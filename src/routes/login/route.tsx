@@ -1,40 +1,40 @@
-import { useState } from 'react'
-import { Button, Input } from 'antd'
-import styled from 'styled-components'
-import { Controller, SubmitHandler, useForm } from 'react-hook-form'
-import { createFileRoute } from '@tanstack/react-router'
+import { useState } from "react";
+import { Button, Input } from "antd";
+import styled from "styled-components";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { createFileRoute } from "@tanstack/react-router";
 
-import { Text } from '@components'
-import { Colors } from '@helpers/utils'
+import { Text } from "@/components/text";
+import { Colors } from "@helpers/utils";
 
 type LoginForm = {
-  username: string
-  password: string
-}
+  username: string;
+  password: string;
+};
 
-export const Route = createFileRoute('/login')({
+export const Route = createFileRoute("/login")({
   component: LoginPage,
-})
+});
 
 function LoginPage() {
-  const isAuth = localStorage.getItem('isAuth')
+  const isAuth = localStorage.getItem("isAuth");
 
   const {
     control,
     formState: { isValid },
     handleSubmit,
-  } = useForm<LoginForm>()
+  } = useForm<LoginForm>();
 
-  const [error, setError] = useState(false)
+  const [error, setError] = useState(false);
 
   const onSubmit: SubmitHandler<LoginForm> = (data) => {
-    if (data.username === 'ongkir' && data.password === 'ongkir') {
-      localStorage.setItem('isAuth', JSON.stringify('true'))
-      return
+    if (data.username === "ongkir" && data.password === "ongkir") {
+      localStorage.setItem("isAuth", JSON.stringify("true"));
+      return;
     }
 
-    setError(true)
-  }
+    setError(true);
+  };
 
   if (isAuth) {
     // return <Navigate to="/" replace />;
@@ -45,7 +45,7 @@ function LoginPage() {
       <Text
         size="xl"
         weight="bold"
-        style={{ width: 'fit-content', margin: '0 auto' }}
+        style={{ width: "fit-content", margin: "0 auto" }}
       >
         Login
       </Text>
@@ -81,7 +81,7 @@ function LoginPage() {
         </Text>
       </Info>
     </LoginStyled>
-  )
+  );
 }
 
 const LoginStyled = styled.div`
@@ -97,13 +97,13 @@ const LoginStyled = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-`
+`;
 
 const FormLogin = styled.form`
   display: flex;
   flex-direction: column;
   gap: 10px;
-`
+`;
 
 const Info = styled.div<{ $isError: boolean }>`
   padding: 10px;
@@ -112,4 +112,4 @@ const Info = styled.div<{ $isError: boolean }>`
   outline: 2px solid
     ${(props) =>
       props.$isError ? Colors.primary.red : Colors.indicator.green.bg};
-`
+`;

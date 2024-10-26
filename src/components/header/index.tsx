@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
-import { Icon, Text } from "@components";
+import { Icon } from "../icon";
+import { Text } from "../text";
 
 import { Colors } from "@/helpers/utils";
 import { useThemeContext } from "@/helpers/lib";

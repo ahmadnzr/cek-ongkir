@@ -1,8 +1,11 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 
-import { Footer, Header, Hero, Text } from "@components";
+import { Footer } from "@components/footer";
+import { Header } from "@components/header";
+import { Hero } from "@components/hero";
+import { Text } from "@components/text";
 import { Colors, courierLogo, getCourierColor } from "@helpers/utils";
-import { FilterInputs, THistoryResponse } from "@/helpers/types";
+import { FilterInputs, THistoryResponse } from "@helpers/types";
 
 import {
   Content,
@@ -15,9 +18,10 @@ import {
   NotFoundContainer,
   ResultContainer,
 } from "./-commons/styles";
-import { Filter, ServiceCourierItem } from "./-commons/components";
-import { useFetchCost } from "./-commons/hooks";
-import { useFetchHistory } from "./-commons/hooks/useFetchHistory";
+import { ServiceCourierItem } from "./-commons/components/service-courier-item";
+import { Filter } from "./-commons/components/filter";
+import { useFetchCost } from "./-commons/hooks/use-fetch-cost";
+import { useFetchHistory } from "./-commons/hooks/use-fetch-history";
 import { useCreateHistoryMutation } from "./-commons/hooks/create-history-mutation";
 import { useDeleteHistoryMutation } from "./-commons/hooks/delete-history-mutation";
 
