@@ -2,11 +2,14 @@ import { Button } from "antd";
 import styled, { css } from "styled-components";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
-import { Text, InputSelect, ControlledInputNumber } from "@components";
+import { Text } from "@components/text";
+import { InputSelect } from "@components/input-select";
+import { ControlledInputNumber } from "@components/controlled-input-number";
 import { FilterInputs, IndicatorColor, THistoryResponse } from "@helpers/types";
 import { Colors, courierType, getCourierColor } from "@helpers/utils";
 
-import { useFetchCity, useFetchProvince } from "../../hooks";
+import { useFetchProvince } from "../../hooks/use-fetch-province";
+import { useFetchCity } from "../../hooks/use-fetch-city";
 
 import { FilterProps } from ".";
 

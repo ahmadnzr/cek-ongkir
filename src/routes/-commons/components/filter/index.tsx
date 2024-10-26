@@ -5,8 +5,8 @@ import styled from "styled-components";
 import { Route } from "@/routes";
 import { FilterInputs, THistoryResponse } from "@/helpers/types";
 
-import { FilterHistory } from "./FilterHistory";
-import { FilterForm } from "./FilterForm";
+import { FilterHistory } from "./filter-history";
+import { FilterForm } from "./filter-form";
 
 export interface FilterProps {
   formProps: {

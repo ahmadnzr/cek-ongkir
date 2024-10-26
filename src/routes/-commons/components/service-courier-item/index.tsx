@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Colors, formatRupiah, getCourierColor } from "@helpers/utils";
 import { CourierDetail, CourierType } from "@helpers/types";
 
-import { Text } from "@components";
+import { Text } from "@components/text";
 
 interface Props {
   cost?: CourierDetail;
