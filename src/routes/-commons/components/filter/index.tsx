@@ -2,7 +2,7 @@ import { Tabs } from "antd";
 import { useNavigate } from "@tanstack/react-router";
 import styled from "styled-components";
 
-import { Route } from "@/routes";
+import { Route, THistorySearch } from "@/routes";
 import { FilterInputs, THistoryResponse } from "@/helpers/types";
 
 import { FilterHistory } from "./filter-history";
@@ -32,7 +32,8 @@ export const Filter = ({ formProps, historyProps }: FilterProps) => {
       <Tabs
         onChange={(val) =>
           navigate({
-            search: () => ({
+            search: (prev: THistorySearch) => ({
+              ...prev,
               tab: val,
             }),
           })
